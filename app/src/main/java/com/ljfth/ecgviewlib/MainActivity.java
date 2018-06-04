@@ -357,7 +357,7 @@ public class MainActivity extends Activity implements View.OnTouchListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_main2);
         mTitleTextView = (TextView) findViewById(R.id.text_usb);
         mTextViewRate  = (TextView) findViewById(R.id.graph_father1_data_text_left);
         mTextViewBPM= (TextView) findViewById(R.id.graph_father1_data_text_right);

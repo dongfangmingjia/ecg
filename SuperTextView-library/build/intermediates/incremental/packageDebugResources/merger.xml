@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merger version="3"><dataSet config="main$Generated" generated="true"><source path="/Users/warner/StudioProject/ecg_new/SuperTextView-library/src/main/res"/><source path="/Users/warner/StudioProject/ecg_new/SuperTextView-library/build/generated/res/rs/debug"/><source path="/Users/warner/StudioProject/ecg_new/SuperTextView-library/build/generated/res/resValues/debug"/></dataSet><dataSet config="main" generated-set="main$Generated"><source path="/Users/warner/StudioProject/ecg_new/SuperTextView-library/src/main/res"><file name="progress" path="/Users/warner/StudioProject/ecg_new/SuperTextView-library/src/main/res/drawable/progress.xml" qualifiers="" type="drawable"/><file name="selector_white" path="/Users/warner/StudioProject/ecg_new/SuperTextView-library/src/main/res/drawable/selector_white.xml" qualifiers="" type="drawable"/><file path="/Users/warner/StudioProject/ecg_new/SuperTextView-library/src/main/res/values/colors.xml" qualifiers=""><color name="white">#FFF</color><color name="common_pressed">#20000000</color><color name="line">#e8e8e8</color></file><file path="/Users/warner/StudioProject/ecg_new/SuperTextView-library/src/main/res/values/commom_textview_ids.xml" qualifiers=""><item name="cLeftTextId" type="id"/><item name="cRightTextId" type="id"/><item name="cCenterTextId" type="id"/><item name="cCenterBaseLineId" type="id"/><item name="cLeftTopTextId" type="id"/><item name="cLeftBottomTextId" type="id"/><item name="cCenterTopTextId" type="id"/><item name="cCenterBottomTextId" type="id"/><item name="cRightTopTextId" type="id"/><item name="cRightBottomTextId" type="id"/><item name="cLeftImageViewId" type="id"/><item name="cRightImageViewId" type="id"/></file><file path="/Users/warner/StudioProject/ecg_new/SuperTextView-library/src/main/res/values/strings.xml" qualifiers=""><string name="app_name">SuperTextViewLibrary</string></file><file path="/Users/warner/StudioProject/ecg_new/SuperTextView-library/src/main/res/values/attrs.xml" qualifiers=""><declare-styleable name="BaseTextView">
+        <attr format="reference" name="sDrawableLeft"/>
+        <attr format="reference" name="sDrawableTop"/>
+        <attr format="reference" name="sDrawableRight"/>
+        <attr format="reference" name="sDrawableBottom"/>
+
+        <attr format="string" name="sTextString"/>
+        <attr format="dimension" name="sTextSize"/>
+        <attr format="color" name="sTextColor"/>
+
+        <attr format="dimension" name="sDrawablePadding"/>
+
+        <attr format="dimension" name="sPadding"/>
+        <attr format="dimension" name="sPaddingLeft"/>
+        <attr format="dimension" name="sPaddingTop"/>
+        <attr format="dimension" name="sPaddingBottom"/>
+        <attr format="dimension" name="sPaddingRight"/>
+
+
+    </declare-styleable><declare-styleable name="SuperTextView">
+        <attr format="reference" name="sLeftIconRes"/>
+        <attr format="reference" name="sRightIconRes"/>
+
+        <attr format="dimension" name="sLeftIconWidth"/>
+        <attr format="dimension" name="sLeftIconHeight"/>
+
+        <attr format="dimension" name="sRightIconWidth"/>
+        <attr format="dimension" name="sRightIconHeight"/>
+
+        <attr format="reference" name="sRightCheckBoxRes"/>
+
+        <attr format="string" name="sLeftTextString"/>
+        <attr format="string" name="sCenterTextString"/>
+        <attr format="string" name="sRightTextString"/>
+
+        <attr format="string" name="sLeftTopTextString"/>
+        <attr format="string" name="sLeftBottomTextString"/>
+        <attr format="string" name="sLeftBottomTextString2"/>
+
+
+        <attr format="dimension" name="sTopLineMargin"/>
+        <attr format="dimension" name="sTopLineMarginLeft"/>
+        <attr format="dimension" name="sTopLineMarginRight"/>
+
+        <attr format="dimension" name="sBottomLineMargin"/>
+        <attr format="dimension" name="sBottomLineMarginLeft"/>
+        <attr format="dimension" name="sBottomLineMarginRight"/>
+
+        <attr format="dimension" name="sBothLineMargin"/>
+        <attr format="dimension" name="sBothLineMarginLeft"/>
+        <attr format="dimension" name="sBothLineMarginRight"/>
+
+        <attr format="dimension" name="sCenterSpaceHeight"/>
+
+        <attr format="dimension" name="sLeftIconMarginLeft"/>
+        <attr format="dimension" name="sLeftTextMarginLeft"/>
+
+        <attr format="dimension" name="sLeftTopTextMarginLeft"/>
+        <attr format="dimension" name="sLeftBottomTextMarginLeft"/>
+        <attr format="dimension" name="sLeftBottomTextMarginLeft2"/>
+
+        <attr format="reference" name="sRightTextStringRightIconRes"/>
+        <attr format="dimension" name="sRightTextStringRightIconResPadding"/>
+
+        <attr format="dimension" name="sRightIconMarginRight"/>
+        <attr format="dimension" name="sRightTextMarginRight"/>
+        <attr format="dimension" name="sRightCheckBoxMarginRight"/>
+        <attr format="boolean" name="sRightCheckBoxShow"/>
+        <attr format="boolean" name="sIsChecked"/>
+        <attr format="boolean" name="sUseRipple"/>
+
+        <attr format="dimension" name="sLeftTextSize"/>
+        <attr format="dimension" name="sLeftTopTextSize"/>
+        <attr format="dimension" name="sLeftBottomTextSize"/>
+        <attr format="dimension" name="sLeftBottomTextSize2"/>
+        <attr format="dimension" name="sRightTextSize"/>
+        <attr format="dimension" name="sCenterTextSize"/>
+
+
+        <attr format="color" name="sBackgroundColor"/>
+        <attr format="color" name="sLeftTextColor"/>
+        <attr format="color" name="sLeftTopTextColor"/>
+        <attr format="color" name="sLeftBottomTextColor"/>
+        <attr format="color" name="sLeftBottomTextColor2"/>
+        <attr format="color" name="sRightTextColor"/>
+        <attr format="color" name="sCenterTextColor"/>
+
+        <attr format="boolean" name="sIsSingLines"/>
+        <attr format="integer" name="sMaxLines"/>
+        <attr format="integer" name="sMaxEms"/>
+
+        <attr format="enum" name="sLineShow">
+            <enum name="none" value="0"/>
+            <enum name="top" value="1"/>
+            <enum name="bottom" value="2"/>
+            <enum name="both" value="3"/>
+        </attr>
+
+        <attr format="dimension" name="sBothLineWidth"/>
+        <attr format="dimension" name="sTopLineWidth"/>
+        <attr format="dimension" name="sBottomLineWidth"/>
+        <attr format="color" name="sLineColor"/>
+
+        <attr format="boolean" name="sLeftTopViewIsClickable"/>
+        <attr format="boolean" name="sLeftBottomViewIsClickable"/>
+        <attr format="boolean" name="sLeftBottomView2IsClickable"/>
+        <attr format="boolean" name="sRightIconIsClickable"/>
+
+        <attr format="reference" name="sBackgroundDrawableRes"/>
+
+    </declare-styleable><declare-styleable name="CommonTextView">
+
+        <attr format="reference" name="cLeftIconResForDrawableLeft"/>
+        <attr format="reference" name="cLeftIconResForDrawableTop"/>
+        <attr format="reference" name="cLeftIconResForDrawableRight"/>
+        <attr format="reference" name="cLeftIconResForDrawableBottom"/>
+
+        <attr format="reference" name="cCenterIconResForDrawableLeft"/>
+        <attr format="reference" name="cCenterIconResForDrawableTop"/>
+        <attr format="reference" name="cCenterIconResForDrawableRight"/>
+        <attr format="reference" name="cCenterIconResForDrawableBottom"/>
+
+        <attr format="reference" name="cRightIconResForDrawableLeft"/>
+        <attr format="reference" name="cRightIconResForDrawableTop"/>
+        <attr format="reference" name="cRightIconResForDrawableRight"/>
+        <attr format="reference" name="cRightIconResForDrawableBottom"/>
+
+        <attr format="reference" name="cLeftImageViewDrawableRes"/>
+        
+
+
+        <attr format="string" name="cLeftTextString"/>
+        <attr format="string" name="cLeftTopTextString"/>
+        <attr format="string" name="cLeftBottomTextString"/>
+
+        <attr format="string" name="cCenterTextString"/>
+        <attr format="string" name="cCenterTopTextString"/>
+        <attr format="string" name="cCenterBottomTextString"/>
+
+        <attr format="string" name="cRightTextString"/>
+        <attr format="string" name="cRightTopTextString"/>
+        <attr format="string" name="cRightBottomTextString"/>
+
+        <attr format="dimension" name="cLeftTextSize"/>
+        <attr format="dimension" name="cLeftTopTextSize"/>
+        <attr format="dimension" name="cLeftBottomTextSize"/>
+
+        <attr format="dimension" name="cCenterTextSize"/>
+        <attr format="dimension" name="cCenterTopTextSize"/>
+        <attr format="dimension" name="cCenterBottomTextSize"/>
+
+        <attr format="dimension" name="cRightTextSize"/>
+        <attr format="dimension" name="cRightTopTextSize"/>
+        <attr format="dimension" name="cRightBottomTextSize"/>
+
+        <attr format="color" name="cLeftTextColor"/>
+        <attr format="color" name="cLeftTopTextColor"/>
+        <attr format="color" name="cLeftBottomTextColor"/>
+
+        <attr format="color" name="cCenterTextColor"/>
+        <attr format="color" name="cCenterTopTextColor"/>
+        <attr format="color" name="cCenterBottomTextColor"/>
+
+        <attr format="color" name="cRightTextColor"/>
+        <attr format="color" name="cRightTopTextColor"/>
+        <attr format="color" name="cRightBottomTextColor"/>
+
+        <attr format="dimension" name="cLeftIconDrawablePadding"/>
+        <attr format="dimension" name="cCenterIconDrawablePadding"/>
+        <attr format="dimension" name="cRightIconDrawablePadding"/>
+
+        <attr format="dimension" name="cLeftViewPaddingLeft"/>
+        <attr format="dimension" name="cLeftViewPaddingRight"/>
+        <attr format="dimension" name="cCenterViewPaddingLeft"/>
+        <attr format="dimension" name="cCenterViewPaddingRight"/>
+        <attr format="dimension" name="cRightViewPaddingLeft"/>
+        <attr format="dimension" name="cRightViewPaddingRight"/>
+
+        <attr format="dimension" name="cTopDividerLineMarginLR"/>
+        <attr format="dimension" name="cTopDividerLineMarginLeft"/>
+        <attr format="dimension" name="cTopDividerLineMarginRight"/>
+
+        <attr format="dimension" name="cBottomDividerLineMarginLR"/>
+        <attr format="dimension" name="cBottomDividerLineMarginLeft"/>
+        <attr format="dimension" name="cBottomDividerLineMarginRight"/>
+
+        <attr format="dimension" name="cBothDividerLineMarginLeft"/>
+        <attr format="dimension" name="cBothDividerLineMarginRight"/>
+
+
+        <attr format="dimension" name="cLeftTextViewLineSpacingExtra"/>
+        <attr format="dimension" name="cCenterTextViewLineSpacingExtra"/>
+        <attr format="dimension" name="cRightTextViewLineSpacingExtra"/>
+
+        <attr format="dimension" name="cCenterSpaceHeight"/>
+
+        <attr format="dimension" name="cLeftImageViewMarginLeft"/>
+        
+
+        <attr format="color" name="cDividerLineColor"/>
+        <attr format="dimension" name="cDividerLineHeight"/>
+
+        <attr format="enum" name="cShowDividerLineType">
+            <enum name="none" value="0"/>
+            <enum name="top" value="1"/>
+            <enum name="bottom" value="2"/>
+            <enum name="both" value="3"/>
+        </attr>
+
+        <attr format="boolean" name="cUseRipple"/>
+        <attr format="color" name="cBackgroundColor"/>
+
+        <attr format="boolean" name="cSetSingleLine"/>
+        <attr format="integer" name="cSetMaxEms"/>
+        <attr format="integer" name="cSetLines"/>
+
+        <attr format="enum" name="cLeftTextViewGravity">
+            <enum name="left_center" value="0"/>
+            <enum name="center" value="1"/>
+            <enum name="right_center" value="2"/>
+        </attr>
+        <attr format="enum" name="cCenterTextViewGravity">
+            <enum name="left_center" value="0"/>
+            <enum name="center" value="1"/>
+            <enum name="right_center" value="2"/>
+        </attr>
+        <attr format="enum" name="cRightTextViewGravity">
+            <enum name="left_center" value="0"/>
+            <enum name="center" value="1"/>
+            <enum name="right_center" value="2"/>
+        </attr>
+
+        <attr format="boolean" name="cLeftViewIsClickable"/>
+        <attr format="boolean" name="cCenterViewIsClickable"/>
+        <attr format="boolean" name="cRightViewIsClickable"/>
+
+        <attr format="reference" name="cBackgroundDrawableRes"/>
+        <attr format="boolean" name="cIsCenterAlignLeft"/>
+        <attr format="dimension" name="cCenterViewMarginLeft"/>
+
+
+    </declare-styleable></file><file path="/Users/warner/StudioProject/ecg_new/SuperTextView-library/src/main/res/values/ids.xml" qualifiers=""><item name="sLeftIconId" type="id"/><item name="sCenterBaseLineId" type="id"/><item name="sCenterTextId" type="id"/><item name="sLeftTextId" type="id"/><item name="sLeftTopTextId" type="id"/><item name="sLeftBottomTextId" type="id"/><item name="sLeftBottomTextId2" type="id"/><item name="sRightTextId" type="id"/><item name="sRightIconId" type="id"/></file><file name="selector_white" path="/Users/warner/StudioProject/ecg_new/SuperTextView-library/src/main/res/drawable-v21/selector_white.xml" qualifiers="v21" type="drawable"/></source><source path="/Users/warner/StudioProject/ecg_new/SuperTextView-library/build/generated/res/rs/debug"/><source path="/Users/warner/StudioProject/ecg_new/SuperTextView-library/build/generated/res/resValues/debug"/></dataSet><dataSet config="debug$Generated" generated="true"><source path="/Users/warner/StudioProject/ecg_new/SuperTextView-library/src/debug/res"/></dataSet><dataSet config="debug" generated-set="debug$Generated"><source path="/Users/warner/StudioProject/ecg_new/SuperTextView-library/src/debug/res"/></dataSet><mergedItems><configuration qualifiers=""><declare-styleable name="SuperTextView"><attr format="reference" name="sLeftIconRes"/><attr format="reference" name="sRightIconRes"/><attr format="dimension" name="sLeftIconWidth"/><attr format="dimension" name="sLeftIconHeight"/><attr format="dimension" name="sRightIconWidth"/><attr format="dimension" name="sRightIconHeight"/><attr format="reference" name="sRightCheckBoxRes"/><attr format="string" name="sLeftTextString"/><attr format="string" name="sCenterTextString"/><attr format="string" name="sRightTextString"/><attr format="string" name="sLeftTopTextString"/><attr format="string" name="sLeftBottomTextString"/><attr format="string" name="sLeftBottomTextString2"/><attr format="dimension" name="sTopLineMargin"/><attr format="dimension" name="sTopLineMarginLeft"/><attr format="dimension" name="sTopLineMarginRight"/><attr format="dimension" name="sBottomLineMargin"/><attr format="dimension" name="sBottomLineMarginLeft"/><attr format="dimension" name="sBottomLineMarginRight"/><attr format="dimension" name="sBothLineMargin"/><attr format="dimension" name="sBothLineMarginLeft"/><attr format="dimension" name="sBothLineMarginRight"/><attr format="dimension" name="sCenterSpaceHeight"/><attr format="dimension" name="sLeftIconMarginLeft"/><attr format="dimension" name="sLeftTextMarginLeft"/><attr format="dimension" name="sLeftTopTextMarginLeft"/><attr format="dimension" name="sLeftBottomTextMarginLeft"/><attr format="dimension" name="sLeftBottomTextMarginLeft2"/><attr format="reference" name="sRightTextStringRightIconRes"/><attr format="dimension" name="sRightTextStringRightIconResPadding"/><attr format="dimension" name="sRightIconMarginRight"/><attr format="dimension" name="sRightTextMarginRight"/><attr format="dimension" name="sRightCheckBoxMarginRight"/><attr format="boolean" name="sRightCheckBoxShow"/><attr format="boolean" name="sIsChecked"/><attr format="boolean" name="sUseRipple"/><attr format="dimension" name="sLeftTextSize"/><attr format="dimension" name="sLeftTopTextSize"/><attr format="dimension" name="sLeftBottomTextSize"/><attr format="dimension" name="sLeftBottomTextSize2"/><attr format="dimension" name="sRightTextSize"/><attr format="dimension" name="sCenterTextSize"/><attr format="color" name="sBackgroundColor"/><attr format="color" name="sLeftTextColor"/><attr format="color" name="sLeftTopTextColor"/><attr format="color" name="sLeftBottomTextColor"/><attr format="color" name="sLeftBottomTextColor2"/><attr format="color" name="sRightTextColor"/><attr format="color" name="sCenterTextColor"/><attr format="boolean" name="sIsSingLines"/><attr format="integer" name="sMaxLines"/><attr format="integer" name="sMaxEms"/><attr format="enum" name="sLineShow">
+            <enum name="none" value="0"/>
+            <enum name="top" value="1"/>
+            <enum name="bottom" value="2"/>
+            <enum name="both" value="3"/>
+        </attr><attr format="dimension" name="sBothLineWidth"/><attr format="dimension" name="sTopLineWidth"/><attr format="dimension" name="sBottomLineWidth"/><attr format="color" name="sLineColor"/><attr format="boolean" name="sLeftTopViewIsClickable"/><attr format="boolean" name="sLeftBottomViewIsClickable"/><attr format="boolean" name="sLeftBottomView2IsClickable"/><attr format="boolean" name="sRightIconIsClickable"/><attr format="reference" name="sBackgroundDrawableRes"/></declare-styleable><declare-styleable name="BaseTextView"><attr format="reference" name="sDrawableLeft"/><attr format="reference" name="sDrawableTop"/><attr format="reference" name="sDrawableRight"/><attr format="reference" name="sDrawableBottom"/><attr format="string" name="sTextString"/><attr format="dimension" name="sTextSize"/><attr format="color" name="sTextColor"/><attr format="dimension" name="sDrawablePadding"/><attr format="dimension" name="sPadding"/><attr format="dimension" name="sPaddingLeft"/><attr format="dimension" name="sPaddingTop"/><attr format="dimension" name="sPaddingBottom"/><attr format="dimension" name="sPaddingRight"/></declare-styleable><declare-styleable name="CommonTextView"><attr format="reference" name="cLeftIconResForDrawableLeft"/><attr format="reference" name="cLeftIconResForDrawableTop"/><attr format="reference" name="cLeftIconResForDrawableRight"/><attr format="reference" name="cLeftIconResForDrawableBottom"/><attr format="reference" name="cCenterIconResForDrawableLeft"/><attr format="reference" name="cCenterIconResForDrawableTop"/><attr format="reference" name="cCenterIconResForDrawableRight"/><attr format="reference" name="cCenterIconResForDrawableBottom"/><attr format="reference" name="cRightIconResForDrawableLeft"/><attr format="reference" name="cRightIconResForDrawableTop"/><attr format="reference" name="cRightIconResForDrawableRight"/><attr format="reference" name="cRightIconResForDrawableBottom"/><attr format="reference" name="cLeftImageViewDrawableRes"/><attr format="string" name="cLeftTextString"/><attr format="string" name="cLeftTopTextString"/><attr format="string" name="cLeftBottomTextString"/><attr format="string" name="cCenterTextString"/><attr format="string" name="cCenterTopTextString"/><attr format="string" name="cCenterBottomTextString"/><attr format="string" name="cRightTextString"/><attr format="string" name="cRightTopTextString"/><attr format="string" name="cRightBottomTextString"/><attr format="dimension" name="cLeftTextSize"/><attr format="dimension" name="cLeftTopTextSize"/><attr format="dimension" name="cLeftBottomTextSize"/><attr format="dimension" name="cCenterTextSize"/><attr format="dimension" name="cCenterTopTextSize"/><attr format="dimension" name="cCenterBottomTextSize"/><attr format="dimension" name="cRightTextSize"/><attr format="dimension" name="cRightTopTextSize"/><attr format="dimension" name="cRightBottomTextSize"/><attr format="color" name="cLeftTextColor"/><attr format="color" name="cLeftTopTextColor"/><attr format="color" name="cLeftBottomTextColor"/><attr format="color" name="cCenterTextColor"/><attr format="color" name="cCenterTopTextColor"/><attr format="color" name="cCenterBottomTextColor"/><attr format="color" name="cRightTextColor"/><attr format="color" name="cRightTopTextColor"/><attr format="color" name="cRightBottomTextColor"/><attr format="dimension" name="cLeftIconDrawablePadding"/><attr format="dimension" name="cCenterIconDrawablePadding"/><attr format="dimension" name="cRightIconDrawablePadding"/><attr format="dimension" name="cLeftViewPaddingLeft"/><attr format="dimension" name="cLeftViewPaddingRight"/><attr format="dimension" name="cCenterViewPaddingLeft"/><attr format="dimension" name="cCenterViewPaddingRight"/><attr format="dimension" name="cRightViewPaddingLeft"/><attr format="dimension" name="cRightViewPaddingRight"/><attr format="dimension" name="cTopDividerLineMarginLR"/><attr format="dimension" name="cTopDividerLineMarginLeft"/><attr format="dimension" name="cTopDividerLineMarginRight"/><attr format="dimension" name="cBottomDividerLineMarginLR"/><attr format="dimension" name="cBottomDividerLineMarginLeft"/><attr format="dimension" name="cBottomDividerLineMarginRight"/><attr format="dimension" name="cBothDividerLineMarginLeft"/><attr format="dimension" name="cBothDividerLineMarginRight"/><attr format="dimension" name="cLeftTextViewLineSpacingExtra"/><attr format="dimension" name="cCenterTextViewLineSpacingExtra"/><attr format="dimension" name="cRightTextViewLineSpacingExtra"/><attr format="dimension" name="cCenterSpaceHeight"/><attr format="dimension" name="cLeftImageViewMarginLeft"/><attr format="color" name="cDividerLineColor"/><attr format="dimension" name="cDividerLineHeight"/><attr format="enum" name="cShowDividerLineType">
+            <enum name="none" value="0"/>
+            <enum name="top" value="1"/>
+            <enum name="bottom" value="2"/>
+            <enum name="both" value="3"/>
+        </attr><attr format="boolean" name="cUseRipple"/><attr format="color" name="cBackgroundColor"/><attr format="boolean" name="cSetSingleLine"/><attr format="integer" name="cSetMaxEms"/><attr format="integer" name="cSetLines"/><attr format="enum" name="cLeftTextViewGravity">
+            <enum name="left_center" value="0"/>
+            <enum name="center" value="1"/>
+            <enum name="right_center" value="2"/>
+        </attr><attr format="enum" name="cCenterTextViewGravity">
+            <enum name="left_center" value="0"/>
+            <enum name="center" value="1"/>
+            <enum name="right_center" value="2"/>
+        </attr><attr format="enum" name="cRightTextViewGravity">
+            <enum name="left_center" value="0"/>
+            <enum name="center" value="1"/>
+            <enum name="right_center" value="2"/>
+        </attr><attr format="boolean" name="cLeftViewIsClickable"/><attr format="boolean" name="cCenterViewIsClickable"/><attr format="boolean" name="cRightViewIsClickable"/><attr format="reference" name="cBackgroundDrawableRes"/><attr format="boolean" name="cIsCenterAlignLeft"/><attr format="dimension" name="cCenterViewMarginLeft"/></declare-styleable></configuration></mergedItems></merger>

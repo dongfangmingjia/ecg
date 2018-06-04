@@ -1,2 +1,2 @@
 include ':app'
-include ':usbSerialForAndroid'
+include ':usbSerialForAndroid','SuperTextView-library'
