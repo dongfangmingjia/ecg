@@ -9,6 +9,8 @@ import android.view.Window;
 
 import java.util.List;
 
+import butterknife.ButterKnife;
+
 /**
  * Created by warner on 2017/9/29.
  */
@@ -48,6 +50,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
 	/**初始化控件*/
 	protected void initWidget() {
+		ButterKnife.bind(this);
 	}
 
 	/**初始化数据*/

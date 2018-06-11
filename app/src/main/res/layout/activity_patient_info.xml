@@ -8,18 +8,273 @@
 
     <include
         android:id="@+id/header"
+        layout="@layout/layout_top"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        layout="@layout/layout_top"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/ll_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        app:layout_constraintLeft_toLeftOf="@+id/ll_pace_making"
+        app:layout_constraintRight_toRightOf="@+id/ll_pace_making"
+        app:layout_constraintTop_toBottomOf="@+id/header">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/name_tips"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/et_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="王华"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            android:background="@null"
+            style="?android:textViewStyle"
+            android:layout_marginLeft="20dp"/>
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/ll_age"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        app:layout_constraintLeft_toLeftOf="@+id/ll_pace_making"
+        app:layout_constraintRight_toRightOf="@+id/ll_pace_making"
+        app:layout_constraintTop_toBottomOf="@+id/ll_name">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/age_tips"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/et_age"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="王华"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            android:background="@null"
+            style="?android:textViewStyle"
+            android:layout_marginLeft="20dp"/>
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/ll_sex"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        app:layout_constraintLeft_toLeftOf="@+id/ll_pace_making"
+        app:layout_constraintRight_toRightOf="@+id/ll_pace_making"
+        app:layout_constraintTop_toBottomOf="@+id/ll_age">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/sex_tips"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <RadioGroup
+            android:id="@+id/rg_sex"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginLeft="20dp">
+
+            <RadioButton
+                android:id="@+id/rb_men"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="男"
+                android:textColor="@color/black"
+                android:textSize="14sp"/>
+
+            <RadioButton
+                android:id="@+id/rb_women"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="女"
+                android:textColor="@color/black"
+                android:textSize="14sp"/>
+
+        </RadioGroup>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_number"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        app:layout_constraintLeft_toLeftOf="@+id/ll_pace_making"
+        app:layout_constraintRight_toRightOf="@+id/ll_pace_making"
+        app:layout_constraintTop_toBottomOf="@+id/ll_sex">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/number_tips"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/et_number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="王华"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            android:background="@null"
+            android:inputType="number"
+            style="?android:textViewStyle"
+            android:layout_marginLeft="20dp"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_bed_number"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        app:layout_constraintLeft_toLeftOf="@+id/ll_pace_making"
+        app:layout_constraintRight_toRightOf="@+id/ll_pace_making"
+        app:layout_constraintTop_toBottomOf="@+id/ll_number">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/bed_number_tips"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/et_bed_number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="王华"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            android:background="@null"
+            style="?android:textViewStyle"
+            android:inputType="number"
+            android:layout_marginLeft="20dp"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_pace_making"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ll_bed_number">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="是否起搏"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <RadioGroup
+            android:id="@+id/rg_pace_making"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginLeft="20dp">
+
+            <RadioButton
+                android:id="@+id/rb_yes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="是"
+                android:textColor="@color/black"
+                android:textSize="14sp"/>
+
+            <RadioButton
+                android:id="@+id/rb_no"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="否"
+                android:textColor="@color/black"
+                android:textSize="14sp"/>
+
+        </RadioGroup>
+
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_marginTop="20dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ll_pace_making">
 
+        <TextView
+            android:id="@+id/tv_in_hospital"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:textColor="@color/black"
+            android:text="入院"
+            android:background="@drawable/black_line_bg"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:layout_marginRight="20dp"/>
+
+        <TextView
+            android:id="@+id/tv_out_hospital"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:textColor="@color/black"
+            android:text="出院"
+            android:background="@drawable/black_line_bg"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:layout_marginLeft="20dp"/>
 
     </LinearLayout>
 

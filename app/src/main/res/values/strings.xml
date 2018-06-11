@@ -3,4 +3,12 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="name_tips">姓&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;名</string>
+    <string name="age_tips">年&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;龄</string>
+    <string name="sex_tips">性&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;别</string>
+    <string name="number_tips">住&#160;&#160;&#160;院&#160;&#160;号</string>
+    <string name="bed_number_tips">床&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;号</string>
+
+    <string name="reset_tips">注意：重置后将会导致已连接设备全部断开连接、参数设置恢复到默认值，\n病人信息清空为出院状态！！！</string>
 </resources>

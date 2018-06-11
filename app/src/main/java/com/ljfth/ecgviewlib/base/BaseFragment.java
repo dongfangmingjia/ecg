@@ -8,6 +8,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
+
 /**
  * Created by warner on 2017/9/29.
  */
@@ -15,6 +18,7 @@ import android.view.ViewGroup;
 public abstract class BaseFragment extends android.support.v4.app.Fragment {
 
 	private View mRoot;
+	private Unbinder mUnbinder;
 	private FragmentActivity mActivity;
 
 
@@ -65,6 +69,7 @@ public abstract class BaseFragment extends android.support.v4.app.Fragment {
 
 	/**初始化控件*/
 	protected void initWidget(View root) {
+		mUnbinder = ButterKnife.bind(this, root);
 	};
 
 	/**初始化数据*/
@@ -79,5 +84,11 @@ public abstract class BaseFragment extends android.support.v4.app.Fragment {
 	 */
 	public boolean onBackPressed() {
 		return false;
+	}
+
+	@Override
+	public void onDestroyView() {
+		super.onDestroyView();
+
 	}
 }

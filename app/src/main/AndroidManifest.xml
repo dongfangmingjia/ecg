@@ -41,7 +41,11 @@
         <activity
             android:name=".AboutActivity"
             android:screenOrientation="landscape" />
-        <activity android:name=".PatientInfoActivity"></activity>
+        <activity
+            android:name=".PatientInfoActivity"
+            android:screenOrientation="landscape" />
+        <activity android:name=".ResetActivity"
+            android:screenOrientation="landscape" />
     </application>
 
 </manifest>
