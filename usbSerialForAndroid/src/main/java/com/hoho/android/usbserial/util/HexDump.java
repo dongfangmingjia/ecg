@@ -16,6 +16,9 @@
 
 package com.hoho.android.usbserial.util;
 
+import android.text.TextUtils;
+import android.widget.TextView;
+
 /**
  * Clone of Android's HexDump class, for use in debugging. Cosmetic changes
  * only.
@@ -158,5 +161,28 @@ public class HexDump {
         }
 
         return buffer;
+    }
+
+    /**
+     * 将16进制的字符串转换为byte数组
+     * @param hexString
+     * @return
+     */
+    public static byte[] toByteArray(String hexString) {
+        if (TextUtils.isEmpty(hexString)) {
+            return null;
+        }
+        int len = hexString.length() / 2;
+        byte[] bytes = new byte[len];
+        byte high = 0;//字节高四位
+        byte low = 0;//字节低四位
+
+        for (int i = 0; i < len; i++) {
+            //右移四位得到高位
+            high = (byte) ((hexString.indexOf(hexString.charAt(2 * i))) << 4);
+            low = (byte) hexString.indexOf(hexString.charAt(2 * i + 1));
+            bytes[i] = (byte) (high | low);//高地位做或运算
+        }
+        return bytes;
     }
 }

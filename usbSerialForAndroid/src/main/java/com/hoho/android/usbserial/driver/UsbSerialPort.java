@@ -29,6 +29,8 @@ import java.io.IOException;
 /**
  * Interface for a single serial port.
  *
+ * 提供所有的与USB串口设备通讯的方法
+ *
  * @author mike wakerly (opensource@hoho.com)
  */
 public interface UsbSerialPort {

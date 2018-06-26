@@ -30,7 +30,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
+ * 获取当前可用的USBserial设备
  * @author mike wakerly (opensource@hoho.com)
  */
 public class UsbSerialProber {
@@ -44,7 +44,11 @@ public class UsbSerialProber {
     public static UsbSerialProber getDefaultProber() {
         return new UsbSerialProber(getDefaultProbeTable());
     }
-    
+
+    /**
+     * 获取默认的Prober实例
+     * @return
+     */
     public static ProbeTable getDefaultProbeTable() {
         final ProbeTable probeTable = new ProbeTable();
         probeTable.addDriver(CdcAcmSerialDriver.class);
@@ -60,6 +64,8 @@ public class UsbSerialProber {
      * from the currently-attached {@link UsbDevice} hierarchy. This method does
      * not require permission from the Android USB system, since it does not
      * open any of the devices.
+     *
+     * 获取所有的UsbSerialDriver列表
      *
      * @param usbManager
      * @return a list, possibly empty, of all compatible drivers
@@ -78,6 +84,8 @@ public class UsbSerialProber {
     
     /**
      * Probes a single device for a compatible driver.
+     *
+     * 根据兼容UsbDevice获取单个UsbSerialDevice实例
      * 
      * @param usbDevice the usb device to probe
      * @return a new {@link UsbSerialDriver} compatible with this device, or

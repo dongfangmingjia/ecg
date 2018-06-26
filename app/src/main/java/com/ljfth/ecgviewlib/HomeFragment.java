@@ -22,6 +22,7 @@ import com.algorithm4.library.algorithm4library.Algorithm4Library;
 import com.hoho.android.usbserial.driver.UsbSerialDriver;
 import com.hoho.android.usbserial.driver.UsbSerialPort;
 import com.hoho.android.usbserial.driver.UsbSerialProber;
+import com.hoho.android.usbserial.util.HexDump;
 import com.hoho.android.usbserial.util.SerialInputOutputManager;
 import com.ljfth.ecgviewlib.base.BaseFragment;
 
@@ -29,6 +30,8 @@ import java.io.BufferedOutputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -72,12 +75,11 @@ public class HomeFragment extends BaseFragment implements View.OnTouchListener {
     private TextView mTextViewPI;
 
 
-
     private ExecutorService mExecutor = Executors.newSingleThreadExecutor();
     private SerialInputOutputManager mSerialIoManager;
     private BroadcastReceiver mReceiver;
     private int dataCount = 0;
-    private byte [][] Data_ = new byte[10][112];
+    private byte[][] Data_ = new byte[10][112];
     private int dataSaveCount = 0;
     private String dataSavePath;
     private static int SaveCountMax = 1000;
@@ -104,23 +106,19 @@ public class HomeFragment extends BaseFragment implements View.OnTouchListener {
                 }
             };
 
-    private void saveData(byte[] data){
+    private void saveData(byte[] data) {
         //存储数据
         dataSaveCount++;
-        if (dataSaveCount == 1 || outputStream == null || bufferedOutputStream == null)
-        {
+        if (dataSaveCount == 1 || outputStream == null || bufferedOutputStream == null) {
             dataSavePath = getDateSavePath();
-            try{
+            try {
                 outputStream = new FileOutputStream(dataSavePath);
                 bufferedOutputStream = new BufferedOutputStream(outputStream);
                 bufferedOutputStream.write(data);
-            }catch (Exception e)
-            {
+            } catch (Exception e) {
                 e.printStackTrace();
-            }
-            finally
-            {
-                if( bufferedOutputStream != null ){
+            } finally {
+                if (bufferedOutputStream != null) {
                     try {
                         bufferedOutputStream.close();
                         bufferedOutputStream = null;
@@ -129,7 +127,7 @@ public class HomeFragment extends BaseFragment implements View.OnTouchListener {
                     }
                 }
 
-                if ( outputStream != null ) {
+                if (outputStream != null) {
                     try {
                         outputStream.close();
                         outputStream = null;
@@ -139,16 +137,12 @@ public class HomeFragment extends BaseFragment implements View.OnTouchListener {
                 }
             }
         }
-        if (dataSaveCount <= SaveCountMax)
-        {
-            try{
+        if (dataSaveCount <= SaveCountMax) {
+            try {
                 bufferedOutputStream.write(data);
-            }catch (Exception e)
-            {
+            } catch (Exception e) {
                 e.printStackTrace();
-            }
-            finally
-            {
+            } finally {
                 if (dataSaveCount == SaveCountMax) {
                     dataSaveCount = 0;
                     if (bufferedOutputStream != null) {
@@ -184,12 +178,9 @@ public class HomeFragment extends BaseFragment implements View.OnTouchListener {
         double sampledData[][] = new double[12][250];
         boolean isGetSampledData = false;
         int controlNum = 1;
-        if (dataCount < controlNum)
-        {
+        if (dataCount < controlNum) {
             Data_[dataCount] = data.clone();
-        }
-        else
-        {
+        } else {
             Algorithm4Library.addData(Data_, 112, 10);
             dataCount = 0;
             Data_[dataCount] = data.clone();
@@ -197,8 +188,7 @@ public class HomeFragment extends BaseFragment implements View.OnTouchListener {
             isGetSampledData = true;
         }
 
-        if(isGetSampledData)
-        {
+        if (isGetSampledData) {
             double data1[] = new double[10];
             Algorithm4Library.getValue(data1);
 
@@ -220,8 +210,7 @@ public class HomeFragment extends BaseFragment implements View.OnTouchListener {
 
         dataCount++;
 
-        if(isGetSampledData)
-        {
+        if (isGetSampledData) {
             //血氧
             for (int i = 1; i <= sampledData[1][0]; i++) {
                 bcgWaveView1.drawWave((int) sampledData[1][i]);
@@ -342,11 +331,11 @@ public class HomeFragment extends BaseFragment implements View.OnTouchListener {
     @Override
     protected void initWidget(View root) {
         mTitleTextView = (TextView) root.findViewById(R.id.text_usb);
-        mTextViewRate  = (TextView) root.findViewById(R.id.graph_father1_data_text_left);
-        mTextViewBPM= (TextView) root.findViewById(R.id.graph_father1_data_text_right);
-        mTextViewHR= (TextView) root.findViewById(R.id.graph_father2_data_text);
-        mTextViewmmHg= (TextView) root.findViewById(R.id.graph_father3_data_text);
-        mTextViewRR= (TextView) root.findViewById(R.id.graph_father4_data_text_left);
+        mTextViewRate = (TextView) root.findViewById(R.id.graph_father1_data_text_left);
+        mTextViewBPM = (TextView) root.findViewById(R.id.graph_father1_data_text_right);
+        mTextViewHR = (TextView) root.findViewById(R.id.graph_father2_data_text);
+        mTextViewmmHg = (TextView) root.findViewById(R.id.graph_father3_data_text);
+        mTextViewRR = (TextView) root.findViewById(R.id.graph_father4_data_text_left);
         mTemperature = (TextView) root.findViewById(R.id.graph_father4_data_text_right);
         mTextViewPI = (TextView) root.findViewById(R.id.graph_father1_data_text_right1);
 
@@ -354,8 +343,23 @@ public class HomeFragment extends BaseFragment implements View.OnTouchListener {
         linearLayout = (LinearLayout) root.findViewById(R.id.root);
         view = getActivity().getWindow().getDecorView();
         linearLayout.setOnTouchListener(this);
+        root.findViewById(R.id.btn_start).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mSerialIoManager != null) {
 
+                    String hexStr = "AAAA0001420500005555";
+                    byte[] bytes = HexDump.toByteArray(hexStr);
+                    mSerialIoManager.writeAsync(bytes);
+                }
 
+//                String hexStr = "AAAA0001420500005555";
+//                byte[] bytes = HexDump.toByteArray(hexStr);
+//                for (byte b : bytes) {
+//                    Log.e("warner", "====================bbbbbbb================" + b);
+//                }
+            }
+        });
 
 
 //        btn_start.setOnClickListener(new View.OnClickListener() {
@@ -636,7 +640,9 @@ public class HomeFragment extends BaseFragment implements View.OnTouchListener {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        getActivity().unregisterReceiver(mReceiver);
+        if (getActivity() != null) {
+            getActivity().unregisterReceiver(mReceiver);
+        }
         Log.e("test", "onDestroy");
     }
 }
