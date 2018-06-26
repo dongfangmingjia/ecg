@@ -44,7 +44,10 @@
         <activity
             android:name=".PatientInfoActivity"
             android:screenOrientation="landscape" />
-        <activity android:name=".ResetActivity"
+        <activity
+            android:name=".ResetActivity"
+            android:screenOrientation="landscape" />
+        <activity android:name=".ParamSettingActivity"
             android:screenOrientation="landscape" />
     </application>
 

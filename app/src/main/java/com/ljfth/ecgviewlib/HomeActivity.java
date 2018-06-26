@@ -50,6 +50,7 @@ public class HomeActivity extends BaseActivity {
             case R.id.stv_device_attachment:
                 break;
             case R.id.stv_param_setting:
+                startActivity(new Intent(HomeActivity.this, ParamSettingActivity.class));
                 break;
             case R.id.stv_save:
                 break;

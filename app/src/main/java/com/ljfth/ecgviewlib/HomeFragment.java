@@ -324,6 +324,7 @@ public class HomeFragment extends BaseFragment implements View.OnTouchListener {
     private String getDateSavePath() {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
         String name = simpleDateFormat.format(new Date());
+        Log.e("warner", "====================path==================" + getActivity().getExternalCacheDir().getAbsolutePath() + name);
         return getActivity().getExternalCacheDir().getAbsolutePath() + name;
     }
 

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ParamSettingActivity">
+
+    <include
+        android:id="@+id/header"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        layout="@layout/layout_top"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <TextView
+        android:id="@+id/tv_tips"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="报警使能"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/header"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"/>
+
+    <android.support.v7.widget.SwitchCompat
+        android:id="@+id/switch_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@+id/tv_tips"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_tips"
+        app:layout_constraintLeft_toRightOf="@+id/tv_tips"
+        android:layout_marginLeft="10dp"/>
+
+
+    <View
+        android:id="@+id/divide_line"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="@color/divide_color"
+        app:layout_constraintTop_toBottomOf="@+id/tv_tips"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="10dp"/>
+
+    <TextView
+        android:id="@+id/tv_params"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="参数设置"
+        android:textSize="15sp"
+        android:textColor="@color/black"
+        app:layout_constraintTop_toBottomOf="@+id/divide_line"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="10dp"/>
+
+</android.support.constraint.ConstraintLayout>
