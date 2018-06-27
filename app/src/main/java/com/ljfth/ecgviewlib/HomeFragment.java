@@ -45,6 +45,8 @@ import java.util.concurrent.ScheduledExecutorService;
 public class HomeFragment extends BaseFragment implements View.OnTouchListener {
 
 
+    private TextView mTvLog;
+
     @Override
     protected int getContentLayoutId() {
         return R.layout.fragment_home;
@@ -168,7 +170,13 @@ public class HomeFragment extends BaseFragment implements View.OnTouchListener {
     }
 
     private void updateReceivedData(byte[] data) {
+        Log.e("warner", "=====================收到数据=================");
 
+        if (mTvLog != null && data != null) {
+            for (byte b : data) {
+                mTvLog.setText(b + "");
+            }
+        }
 //        final String message = "Read " + data.length + " bytes: \n"
 //                + HexDump.dumpHexString(data) + "\n\n";
 //        mDumpTextView.append(message);
@@ -347,20 +355,19 @@ public class HomeFragment extends BaseFragment implements View.OnTouchListener {
         root.findViewById(R.id.btn_start).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.e("warner", "=====================mSerialIoManager==================" + mSerialIoManager);
                 if (mSerialIoManager != null) {
 
                     String hexStr = "AAAA0001420500005555";
                     byte[] bytes = HexDump.toByteArray(hexStr);
                     mSerialIoManager.writeAsync(bytes);
+                    Log.e("warner", "=====================发送指令==================");
                 }
-
-//                String hexStr = "AAAA0001420500005555";
-//                byte[] bytes = HexDump.toByteArray(hexStr);
-//                for (byte b : bytes) {
-//                    Log.e("warner", "====================bbbbbbb================" + b);
-//                }
             }
         });
+
+        mTvLog = root.findViewById(R.id.tv_log);
+
 
 
 //        btn_start.setOnClickListener(new View.OnClickListener() {
