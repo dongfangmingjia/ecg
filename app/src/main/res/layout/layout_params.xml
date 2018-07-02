@@ -1,0 +1,973 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <View
+        android:id="@+id/line0"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="@color/black"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"/>
+
+    <LinearLayout
+        android:id="@+id/ll_params_tips"
+        android:layout_width="0dp"
+        android:layout_height="25dp"
+        android:orientation="horizontal"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/line0"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp">
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/black"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="参数"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            android:gravity="center"/>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/black"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="上限"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            android:gravity="center"/>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/black"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="下限"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            android:gravity="center"/>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/black"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="速度"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            android:gravity="center"/>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/black"/>
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/line1"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="@color/black"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ll_params_tips"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"/>
+
+    <LinearLayout
+        android:id="@+id/ll_params1"
+        android:layout_width="0dp"
+        android:layout_height="25dp"
+        android:orientation="horizontal"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/line1"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp">
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/black"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:text="SpO2"
+            android:textSize="14sp"
+            android:textColor="@color/black"
+            android:layout_weight="1"
+            android:gravity="center"/>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/black"/>
+
+        <EditText
+            android:id="@+id/et_sp_top"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@null"
+            style="?android:attr/textViewStyle"
+            android:textColor="@color/black"
+            android:hint="100"
+            android:gravity="center"/>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/black"/>
+
+        <EditText
+            android:id="@+id/et_sp_bottom"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@null"
+            style="?android:attr/textViewStyle"
+            android:textColor="@color/black"
+            android:hint="100"
+            android:gravity="center"/>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/black"/>
+
+        <RadioGroup
+            android:id="@+id/rg_sp"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/rb_sp_12"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="低"
+                android:layout_weight="1"
+                android:textSize="10sp"
+                android:lines="1"
+                android:textColor="@color/black"/>
+
+            <RadioButton
+                android:id="@+id/rb_sp_25"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="中"
+                android:layout_weight="1"
+                android:textSize="10sp"
+                android:textColor="@color/black"/>
+
+            <RadioButton
+                android:id="@+id/rb_sp_50"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="高"
+                android:layout_weight="1"
+                android:textSize="10sp"
+                android:textColor="@color/black"/>
+
+        </RadioGroup>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/black"/>
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/line2"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="@color/black"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ll_params1"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"/>
+
+    <LinearLayout
+        android:id="@+id/ll_params2"
+        android:layout_width="0dp"
+        android:layout_height="25dp"
+        android:orientation="horizontal"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/line2"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp">
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/black"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:text="ECG"
+            android:textSize="14sp"
+            android:textColor="@color/black"
+            android:layout_weight="1"
+            android:gravity="center"/>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/black"/>
+
+        <EditText
+            android:id="@+id/et_ecg_top"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@null"
+            style="?android:attr/textViewStyle"
+            android:textColor="@color/black"
+            android:hint="100"
+            android:gravity="center"/>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/black"/>
+
+        <EditText
+            android:id="@+id/et_ecg_bottom"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@null"
+            style="?android:attr/textViewStyle"
+            android:textColor="@color/black"
+            android:hint="100"
+            android:gravity="center"/>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/black"/>
+
+        <RadioGroup
+            android:id="@+id/rg_ecg"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/rb_ecg_12"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="低"
+                android:layout_weight="1"
+                android:textSize="10sp"
+                android:lines="1"
+                android:textColor="@color/black"/>
+
+            <RadioButton
+                android:id="@+id/rb_ecg_25"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="中"
+                android:layout_weight="1"
+                android:textSize="10sp"
+                android:textColor="@color/black"/>
+
+            <RadioButton
+                android:id="@+id/rb_ecg_50"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="高"
+                android:layout_weight="1"
+                android:textSize="10sp"
+                android:textColor="@color/black"/>
+
+        </RadioGroup>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/black"/>
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/line3"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="@color/black"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ll_params2"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"/>
+
+    <LinearLayout
+        android:id="@+id/ll_params3"
+        android:layout_width="0dp"
+        android:layout_height="25dp"
+        android:orientation="horizontal"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/line3"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp">
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/black"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:text="Resp"
+            android:textSize="14sp"
+            android:textColor="@color/black"
+            android:layout_weight="1"
+            android:gravity="center"/>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/black"/>
+
+        <EditText
+            android:id="@+id/et_resp_top"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@null"
+            style="?android:attr/textViewStyle"
+            android:textColor="@color/black"
+            android:hint="100"
+            android:gravity="center"/>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/black"/>
+
+        <EditText
+            android:id="@+id/et_resp_bottom"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@null"
+            style="?android:attr/textViewStyle"
+            android:textColor="@color/black"
+            android:hint="100"
+            android:gravity="center"/>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/black"/>
+
+        <RadioGroup
+            android:id="@+id/rg_resp"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/rb_resp_12"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="低"
+                android:layout_weight="1"
+                android:textSize="10sp"
+                android:lines="1"
+                android:textColor="@color/black"/>
+
+            <RadioButton
+                android:id="@+id/rb_resp_25"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="中"
+                android:layout_weight="1"
+                android:textSize="10sp"
+                android:textColor="@color/black"/>
+
+            <RadioButton
+                android:id="@+id/rb_resp_50"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="高"
+                android:layout_weight="1"
+                android:textSize="10sp"
+                android:textColor="@color/black"/>
+
+        </RadioGroup>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/black"/>
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/line4"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="@color/black"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ll_params3"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"/>
+
+    <LinearLayout
+        android:id="@+id/ll_params4"
+        android:layout_width="0dp"
+        android:layout_height="25dp"
+        android:orientation="horizontal"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/line4"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp">
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/black"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:text="Temp"
+            android:textSize="14sp"
+            android:textColor="@color/black"
+            android:layout_weight="1"
+            android:gravity="center"/>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/black"/>
+
+        <EditText
+            android:id="@+id/et_temp_top"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@null"
+            style="?android:attr/textViewStyle"
+            android:textColor="@color/black"
+            android:hint="100"
+            android:gravity="center"/>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/black"/>
+
+        <EditText
+            android:id="@+id/et_temp_bottom"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@null"
+            style="?android:attr/textViewStyle"
+            android:textColor="@color/black"
+            android:hint="100"
+            android:gravity="center"/>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/black"/>
+
+        <RadioGroup
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+        </RadioGroup>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/black"/>
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/line5"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="@color/black"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ll_params4"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"/>
+
+    <LinearLayout
+        android:id="@+id/ll_params5"
+        android:layout_width="0dp"
+        android:layout_height="25dp"
+        android:orientation="horizontal"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/line5"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp">
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/black"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:text="CNIBP"
+            android:textSize="14sp"
+            android:textColor="@color/black"
+            android:layout_weight="1"
+            android:gravity="center"/>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/black"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="---"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:gravity="center"/>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/black"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:textStyle="bold"
+            android:text="---"
+            android:textColor="@color/black"
+            android:gravity="center"/>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/black"/>
+
+        <RadioGroup
+            android:id="@+id/rg_cnibp"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/rb_cnibp_12"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="低"
+                android:layout_weight="1"
+                android:textSize="10sp"
+                android:lines="1"
+                android:textColor="@color/black"/>
+
+            <RadioButton
+                android:id="@+id/rb_cnibp_25"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="中"
+                android:layout_weight="1"
+                android:textSize="10sp"
+                android:textColor="@color/black"/>
+
+            <RadioButton
+                android:id="@+id/rb_cnibp_50"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="高"
+                android:layout_weight="1"
+                android:textSize="10sp"
+                android:textColor="@color/black"/>
+
+        </RadioGroup>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/black"/>
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/line6"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="@color/black"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ll_params5"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"/>
+
+    <LinearLayout
+        android:id="@+id/ll_params6"
+        android:layout_width="0dp"
+        android:layout_height="25dp"
+        android:orientation="horizontal"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/line6"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp">
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/black"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:text="收缩压（SBP）"
+            android:textSize="14sp"
+            android:textColor="@color/black"
+            android:layout_weight="1"
+            android:gravity="center"/>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/black"/>
+
+        <EditText
+            android:id="@+id/et_sbp_top"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@null"
+            style="?android:attr/textViewStyle"
+            android:textColor="@color/black"
+            android:hint="100"
+            android:gravity="center"/>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/black"/>
+
+        <EditText
+            android:id="@+id/et_sbp_bottom"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@null"
+            style="?android:attr/textViewStyle"
+            android:textColor="@color/black"
+            android:hint="100"
+            android:gravity="center"/>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/black"/>
+
+        <RadioGroup
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+        </RadioGroup>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/black"/>
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/line7"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="@color/black"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ll_params6"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"/>
+
+    <LinearLayout
+        android:id="@+id/ll_params7"
+        android:layout_width="0dp"
+        android:layout_height="25dp"
+        android:orientation="horizontal"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/line7"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp">
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/black"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:text="舒张压（DBP）"
+            android:textSize="14sp"
+            android:textColor="@color/black"
+            android:layout_weight="1"
+            android:gravity="center"/>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/black"/>
+
+        <EditText
+            android:id="@+id/et_dbp_top"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@null"
+            style="?android:attr/textViewStyle"
+            android:textColor="@color/black"
+            android:hint="100"
+            android:gravity="center"/>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/black"/>
+
+        <EditText
+            android:id="@+id/et_dbp_bottom"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@null"
+            style="?android:attr/textViewStyle"
+            android:textColor="@color/black"
+            android:hint="100"
+            android:gravity="center"/>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/black"/>
+
+        <RadioGroup
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+        </RadioGroup>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/black"/>
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/line8"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="@color/black"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ll_params7"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"/>
+
+    <LinearLayout
+        android:id="@+id/ll_params8"
+        android:layout_width="0dp"
+        android:layout_height="25dp"
+        android:orientation="horizontal"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/line8"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp">
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/black"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:text="平均压（MAP）"
+            android:textSize="14sp"
+            android:textColor="@color/black"
+            android:layout_weight="1"
+            android:gravity="center"/>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/black"/>
+
+        <EditText
+            android:id="@+id/et_map_top"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@null"
+            style="?android:attr/textViewStyle"
+            android:textColor="@color/black"
+            android:hint="100"
+            android:gravity="center"/>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/black"/>
+
+        <EditText
+            android:id="@+id/et_map_bottom"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@null"
+            style="?android:attr/textViewStyle"
+            android:textColor="@color/black"
+            android:hint="100"
+            android:gravity="center"/>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/black"/>
+
+        <RadioGroup
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+        </RadioGroup>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/black"/>
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/line9"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="@color/black"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ll_params8"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"/>
+
+    <TextView
+        android:id="@+id/btn_save"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="保存"
+        android:textSize="14sp"
+        android:background="@drawable/black_line_bg"
+        android:paddingTop="3dp"
+        android:paddingBottom="3dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/line9"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="10dp"/>
+
+    <View
+        android:id="@+id/divide_view"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="@color/divide_color"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_save"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="10dp"/>
+
+
+    <TextView
+        android:id="@+id/tv_tips"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="报警音量"
+        android:textSize="14sp"
+        android:textColor="@color/black"
+        app:layout_constraintTop_toBottomOf="@+id/divide_view"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="20dp"/>
+
+
+    <SeekBar
+        android:id="@+id/sb_volume"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@+id/tv_tips"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_tips"
+        app:layout_constraintLeft_toRightOf="@+id/tv_tips"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginRight="5dp"
+        android:progress="100"
+        android:max="100"/>
+
+</android.support.constraint.ConstraintLayout>
