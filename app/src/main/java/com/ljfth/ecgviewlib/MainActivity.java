@@ -9,7 +9,9 @@ import android.graphics.Color;
 import android.hardware.usb.UsbDeviceConnection;
 import android.hardware.usb.UsbManager;
 import android.os.Bundle;
+import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewTreeObserver;
@@ -45,10 +47,13 @@ import com.hoho.android.usbserial.util.HexDump;
 import com.hoho.android.usbserial.util.SerialInputOutputManager;
 
 import com.algorithm4.library.algorithm4library.Algorithm4Library;
+import com.ljfth.ecgviewlib.base.BaseActivity;
+
+import butterknife.BindView;
+import butterknife.OnClick;
 
 
-
-public class MainActivity extends Activity implements View.OnTouchListener {
+public class MainActivity extends BaseActivity implements View.OnTouchListener {
     private RelativeLayout graph_father;
     private LinearLayout linearLayout;
     private EcgWaveView bcgWaveView1;
@@ -73,7 +78,10 @@ public class MainActivity extends Activity implements View.OnTouchListener {
     private TextView mTextViewRR;
     private TextView mTextViewPI;
 
-
+    @BindView(R.id.drawer_layout)
+    DrawerLayout mDrawerLayout;
+    @BindView(R.id.text_title)
+    TextView textTitle;
 
     private ExecutorService mExecutor = Executors.newSingleThreadExecutor();
     private SerialInputOutputManager mSerialIoManager;
@@ -97,10 +105,10 @@ public class MainActivity extends Activity implements View.OnTouchListener {
 
                 @Override
                 public void onNewData(final byte[] data) {
-                    MainActivity.this.runOnUiThread(new Runnable() {
+                    runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            MainActivity.this.updateReceivedData(data);
+                            updateReceivedData(data);
                         }
                     });
                 }
@@ -176,13 +184,6 @@ public class MainActivity extends Activity implements View.OnTouchListener {
     }
 
     private void updateReceivedData(byte[] data) {
-
-//        final String message = "Read " + data.length + " bytes: \n"
-//                + HexDump.dumpHexString(data) + "\n\n";
-//        mDumpTextView.append(message);
-//        mDumpTextView.setText(message);
-//        mScrollView.smoothScrollTo(0, mDumpTextView.getBottom());
-
         double sampledData[][] = new double[12][250];
         boolean isGetSampledData = false;
         int controlNum = 1;
@@ -239,67 +240,6 @@ public class MainActivity extends Activity implements View.OnTouchListener {
         }
 
         saveData(data);
-
-        //一下都是直接拿到数据显示，老代码，要废弃
-//        if (data != null && data.length == 112 && (data[0] & 0xFF) == 0xAA) {
-//            //0x01是心电图
-//            String message = "";
-//            switch (data[1] & 0xFF) {
-//                //血氧
-//                case 0x00:
-//                    for (int i = 2; i < data.length - 3; i += 6) {
-//                        int value1 = data[i + 2] & 0xFF | (data[i + 1] & 0xFF) << 8 | (data[i] & 0xFF) << 16;
-//                        message += value1 + " ";
-//                        if (bcgWaveView1 != null) {
-//                            bcgWaveView1.drawWave(value1);
-//                        }
-//                        //    mUsbLog.setText(message);
-//                    }
-//                    break;
-//                //心电
-//                case 0x01:
-//                    for (int i = 2; i < data.length - 3; i += 9) {
-//                        int value1 = data[i + 2] & 0xFF | (data[i + 1] & 0xFF) << 8 | (data[i] & 0xFF) << 16;
-//                        message += value1 + " ";
-//                        if (bcgWaveView2 != null) {
-//                            bcgWaveView2.drawWave(value1);
-//                        }
-//                    }
-//                    //    mUsbLog.setText(message);
-//                    break;
-//                //血压
-//                case 0x02:
-//                    for (int i = 2; i < data.length - 3; i += 4) {
-//                        int value1 = data[i + 1] & 0xFF | (data[i] & 0xFF) << 8;
-//                        message += value1 + " ";
-//                        if (bcgWaveView3 != null) {
-//                            bcgWaveView3.drawWave(value1);
-//                        }
-////                        mUsbLog.setText(message);
-//                    }
-//                    break;
-//                //呼吸
-//                case 0x03:
-//                    for (int i = 2; i < data.length - 3; i += 3) {
-//                        int value1 = data[i + 2] & 0xFF | (data[i + 1] & 0xFF) << 8 | (data[i] & 0xFF) << 16;
-//                        message += value1 + " ";
-//                        if (bcgWaveView4 != null) {
-//                            bcgWaveView4.drawWave(value1);
-//                        }
-////                        mUsbLog.setText(message);
-//                    }
-//                    byte[] data1 = new byte[1];
-//                    byte[] data2 = new byte[1];
-//                    data1[0] = data[2];
-//                    data2[0] = data[3];
-//                    mTemperature.setText(bcd2Str(data1) + "." + bcd2Str(data2));
-//                    break;
-//                default:
-////                    mUsbLog.setText((data[1] & 0xFF) + "");
-//
-//            }
-
-//        }
     }
 
     public static String bcd2Str(byte[] bytes) {
@@ -334,6 +274,31 @@ public class MainActivity extends Activity implements View.OnTouchListener {
     }
 
 
+    private void writeIoManage(byte[] array) {
+        String str = String.format("array len %d", array.length);
+        textTitle.setText(str);
+        Log.i("test" ,"recv len "+str);
+        if (mPort != null)
+        {
+            if (array.length > 0) {
+                try {
+                    int nRet = mPort.write(array, 100);
+                    str = String.format("w succ %d", nRet);
+                    textTitle.setText(str);
+                    //mTextViewHR.setText("write ok");
+                }
+                catch(IOException e2){
+                    //ignore
+                    str = String.format("write error ");
+                    textTitle.setText(str+e2.toString());
+                    Log.e("test", "Serial testwrite error");
+                    //mTextViewHR.setText("write Error");
+                }
+            }
+        }
+    }
+
+
 
     @Override
     protected void onNewIntent(Intent intent) {
@@ -355,9 +320,13 @@ public class MainActivity extends Activity implements View.OnTouchListener {
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main2);
+    protected int getcontentLayoutId() {
+        return R.layout.activity_main2;
+    }
+
+    @Override
+    protected void initWidget() {
+        super.initWidget();
         mTitleTextView = (TextView) findViewById(R.id.text_usb);
         mTextViewRate  = (TextView) findViewById(R.id.graph_father1_data_text_left);
         mTextViewBPM= (TextView) findViewById(R.id.graph_father1_data_text_right);
@@ -372,25 +341,6 @@ public class MainActivity extends Activity implements View.OnTouchListener {
         view = getWindow().getDecorView();
         linearLayout.setOnTouchListener(this);
 
-
-
-
-//        btn_start.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                if (btn_start.getText().equals("start")) {
-//                    flag = true;
-//                    generateData();
-//                    btn_start.setText("stop");
-//                } else {
-//                    flag = false;
-//                    stopData();
-//                    btn_start.setText("start");
-//
-//                }
-//            }
-//        });
-
         //ljfth:
         mUsbManager = (UsbManager) getSystemService(Context.USB_SERVICE);
         initPort();
@@ -400,8 +350,6 @@ public class MainActivity extends Activity implements View.OnTouchListener {
             @Override
             public void onReceive(Context context, Intent intent) {
                 String curItentActionName = intent.getAction();
-//                Toast.makeText(context, String.valueOf("Current Intent Action: " + curItentActionName), 1000).show();
-
                 if (UsbManager.ACTION_USB_DEVICE_DETACHED.equals(curItentActionName)) {
                     mTitleTextView.setText("No serial device.");
                 }
@@ -433,36 +381,6 @@ public class MainActivity extends Activity implements View.OnTouchListener {
             }
         }
     }
-
-//    public void stopData() {
-//         scheduledExecutor.shutdown();;
-//    }
-
-//    public void generateData() {
-//        scheduledExecutor.scheduleAtFixedRate(new Runnable() {
-//            @Override
-//            public void run() {
-//                getEcgData();
-//            }
-//        }, 1, 20, TimeUnit.MILLISECONDS);
-//
-//    }
-
-//    int i = 0;
-//
-//    public void getEcgData() {
-//        if (flag) {
-//            final int y = (int) (500 * Math.sin(2 * Math.PI * i / 100) + 700);
-//            Log.i("tag", y + "");
-//            runOnUiThread(new Runnable() {
-//                @Override
-//                public void run() {
-//                    bcgWaveView3.drawWave(y);
-//                }
-//            });
-//            i++;
-//        }
-//    }
 
     private void initView() {
         view.getViewTreeObserver().addOnGlobalLayoutListener(
@@ -592,19 +510,8 @@ public class MainActivity extends Activity implements View.OnTouchListener {
 
     @Override
     protected void onResume() {
-//        byte a[][] = new byte[10][112];
-//        Algorithm4Library.addData(a, 112, 10);
-//        double data[] = {1,2,3,4,5,6,7,8,9,10};
-//        Algorithm4Library.getValue(data);
-//        for (int i = 0; i < 10; i++)
-//        {
-//            Log.d("ljfth", "data " + i + "=" + data[i]);
-//
-//        }
-
         super.onResume();
 
-//        Toast.makeText(MainActivity.this, "Resumed, port=" + mPort, Toast.LENGTH_SHORT).show();
         if (mPort == null) {
             mTitleTextView.setText("No serial device.");
         } else {
@@ -616,7 +523,7 @@ public class MainActivity extends Activity implements View.OnTouchListener {
 
             try {
                 mPort.open(connection);
-                mPort.setParameters(115200, 8, UsbSerialPort.STOPBITS_1, UsbSerialPort.PARITY_NONE);
+                mPort.setParameters(230400, 8, UsbSerialPort.STOPBITS_1, UsbSerialPort.PARITY_NONE);
             } catch (IOException e) {
                 Toast.makeText(MainActivity.this, "Error setting up device: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                 mTitleTextView.setText("Error opening device: " + e.getMessage());
@@ -629,6 +536,8 @@ public class MainActivity extends Activity implements View.OnTouchListener {
                 return;
             }
             mTitleTextView.setText("Serial device: " + mPort.getClass().getSimpleName());
+
+            writeIoManage(GeneralSpO2Command(true));
         }
         onDeviceStateChange();
 
@@ -638,6 +547,7 @@ public class MainActivity extends Activity implements View.OnTouchListener {
     @Override
     protected void onPause() {
         super.onPause();
+        mDrawerLayout.closeDrawer(Gravity.START);
         stopIoManager();
         if (mPort != null) {
             try {
@@ -674,5 +584,128 @@ public class MainActivity extends Activity implements View.OnTouchListener {
         super.onDestroy();
         unregisterReceiver(mReceiver);
         Log.e("test", "onDestroy");
+    }
+
+    //*************************一些命令*************************
+
+    // 打开或关闭血氧
+    private  byte[] GeneralSpO2Command(boolean isOpen) {
+
+        byte[] array = new byte[10];
+
+        array[0] = (byte) (0xAA);
+        array[1] = (byte) (0xAA);
+        array[2] = (byte) (0x00);
+        array[3] = (byte) (0x01);
+        if (isOpen) {
+            array[4] = (byte) (0x42);
+        } else {
+            array[4] = (byte) (0x43);
+        }
+        array[5] = (byte) (0x00);
+        array[6] = (byte) (0x00);
+        array[7] = (byte) (0x00);
+        array[8] = (byte) (0x55);
+        array[9] = (byte) (0x55);
+
+        return array;
+    }
+
+    // 打开或关闭心电和呼吸
+    private  byte[] GeneralECGCommand(boolean isOpen) {
+
+        byte[] array = new byte[10];
+        //byte array[] = {0xAA, 0xAA, 0x00, 0x01, 0x42, 0x00, 0x00, 0x00, 0x55, 0x55};
+
+        array[0] = (byte) (0xAA);
+        array[1] = (byte) (0xAA);
+        array[2] = (byte) (0x00);
+        array[3] = (byte) (0x01);
+        if (isOpen) {
+            array[4] = (byte) (0x42);
+        } else {
+            array[4] = (byte) (0x43);
+        }
+        array[5] = (byte) (0x01);
+        array[6] = (byte) (0x00);
+        array[7] = (byte) (0x00);
+        array[8] = (byte) (0x55);
+        array[9] = (byte) (0x55);
+
+        return array;
+    }
+
+    // 打开或关闭温度
+    private  byte[] GeneralTempCommand(boolean isOpen) {
+
+        byte[] array = new byte[10];
+        //byte array[] = {0xAA, 0xAA, 0x00, 0x01, 0x42, 0x00, 0x00, 0x00, 0x55, 0x55};
+
+        array[0] = (byte) (0xAA);
+        array[1] = (byte) (0xAA);
+        array[2] = (byte) (0x00);
+        array[3] = (byte) (0x01);
+        if (isOpen) {
+            array[4] = (byte) (0x42);
+        } else {
+            array[4] = (byte) (0x43);
+        }
+        array[5] = (byte) (0x04);
+        array[6] = (byte) (0x00);
+        array[7] = (byte) (0x00);
+        array[8] = (byte) (0x55);
+        array[9] = (byte) (0x55);
+
+        return array;
+    }
+
+    // 打开或关闭血压
+    private  byte[] GeneralNIBPCommand(boolean isOpen) {
+
+        byte[] array = new byte[10];
+        //byte array[] = {0xAA, 0xAA, 0x00, 0x01, 0x42, 0x00, 0x00, 0x00, 0x55, 0x55};
+
+        array[0] = (byte) (0xAA);
+        array[1] = (byte) (0xAA);
+        array[2] = (byte) (0x00);
+        array[3] = (byte) (0x01);
+        if (isOpen) {
+            array[4] = (byte) (0x42);
+        } else {
+            array[4] = (byte) (0x43);
+        }
+        array[5] = (byte) (0x05);
+        array[6] = (byte) (0x00);
+        array[7] = (byte) (0x00);
+        array[8] = (byte) (0x55);
+        array[9] = (byte) (0x55);
+
+        return array;
+    }
+
+    //*************************一些命令*************************
+
+
+    @OnClick({R.id.stv_patient_info, R.id.stv_device_attachment, R.id.stv_param_setting,
+            R.id.stv_save, R.id.stv_reset, R.id.stv_about})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.stv_patient_info:
+                startActivity(new Intent(MainActivity.this, PatientInfoActivity.class));
+                break;
+            case R.id.stv_device_attachment:
+                break;
+            case R.id.stv_param_setting:
+                startActivity(new Intent(MainActivity.this, ParamSettingActivity.class));
+                break;
+            case R.id.stv_save:
+                break;
+            case R.id.stv_reset:
+                startActivity(new Intent(MainActivity.this, ResetActivity.class));
+                break;
+            case R.id.stv_about:
+                startActivity(new Intent(MainActivity.this, AboutActivity.class));
+                break;
+        }
     }
 }

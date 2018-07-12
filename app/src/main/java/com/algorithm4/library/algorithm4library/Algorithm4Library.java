@@ -14,4 +14,13 @@ public class Algorithm4Library {
     public native static void getValue(double Data[]);
 
     public native static void getSampledData(double SampledData[][]);
+
+    public native static void getSampledData(double SampledData[][], double SampleDataLen[]);
+    //public native static void getSampledDataEX(double SampleDataLen[]);
+
+    public native static int addRecvData(byte data[], int nDataLen);
+
+    public native static boolean GeneralCmd4Dev(int cmdType, byte cmdTransfer[]);
+
+    public native static boolean GetCmdResult(int cmdType, byte cmdTransfer[]);
 }  
