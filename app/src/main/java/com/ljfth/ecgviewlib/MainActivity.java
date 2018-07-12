@@ -9,7 +9,9 @@ import android.graphics.Color;
 import android.hardware.usb.UsbDeviceConnection;
 import android.hardware.usb.UsbManager;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.widget.DrawerLayout;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.MotionEvent;
@@ -30,10 +32,12 @@ import java.io.BufferedWriter;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.security.spec.ECGenParameterSpec;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -48,6 +52,10 @@ import com.hoho.android.usbserial.util.SerialInputOutputManager;
 
 import com.algorithm4.library.algorithm4library.Algorithm4Library;
 import com.ljfth.ecgviewlib.base.BaseActivity;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -507,6 +515,11 @@ public class MainActivity extends BaseActivity implements View.OnTouchListener {
         return false;
     }
 
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        EventBus.getDefault().register(this);
+    }
 
     @Override
     protected void onResume() {
@@ -583,6 +596,7 @@ public class MainActivity extends BaseActivity implements View.OnTouchListener {
     protected void onDestroy() {
         super.onDestroy();
         unregisterReceiver(mReceiver);
+        EventBus.getDefault().unregister(this);
         Log.e("test", "onDestroy");
     }
 
@@ -694,11 +708,13 @@ public class MainActivity extends BaseActivity implements View.OnTouchListener {
                 startActivity(new Intent(MainActivity.this, PatientInfoActivity.class));
                 break;
             case R.id.stv_device_attachment:
+                startActivity(new Intent(MainActivity.this, DevicesActivity.class));
                 break;
             case R.id.stv_param_setting:
                 startActivity(new Intent(MainActivity.this, ParamSettingActivity.class));
                 break;
             case R.id.stv_save:
+                startActivity(new Intent(MainActivity.this, SaveActivity.class));
                 break;
             case R.id.stv_reset:
                 startActivity(new Intent(MainActivity.this, ResetActivity.class));
@@ -706,6 +722,21 @@ public class MainActivity extends BaseActivity implements View.OnTouchListener {
             case R.id.stv_about:
                 startActivity(new Intent(MainActivity.this, AboutActivity.class));
                 break;
+        }
+    }
+
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(HashMap<String, String> params) {
+        if (params != null) {
+            String action = params.get("action");
+            if (TextUtils.equals(action, PatientInfoActivity.ACTION_SAVE)) {
+                String name = EcgSharedPrefrence.getName(MainActivity.this);
+                String bedNum = EcgSharedPrefrence.getBedNum(MainActivity.this);
+                textTitle.setText(name + "  -  " + bedNum + "床");
+            } else if (TextUtils.equals(action, PatientInfoActivity.ACTION_CLEAR)) {
+                textTitle.setText("");
+            }
         }
     }
 }

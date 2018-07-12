@@ -47,7 +47,12 @@
         <activity
             android:name=".ResetActivity"
             android:screenOrientation="landscape" />
-        <activity android:name=".ParamSettingActivity"
+        <activity
+            android:name=".ParamSettingActivity"
+            android:screenOrientation="landscape" />
+        <activity android:name=".SaveActivity"
+            android:screenOrientation="landscape" />
+        <activity android:name=".DevicesActivity"
             android:screenOrientation="landscape" />
     </application>
 
