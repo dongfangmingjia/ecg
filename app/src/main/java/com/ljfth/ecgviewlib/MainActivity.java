@@ -1,6 +1,5 @@
 package com.ljfth.ecgviewlib;
 
-import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -23,39 +22,27 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.ljfth.ecgviewlib.EcgViewInterface;
-import com.ljfth.ecgviewlib.EcgWaveView;
+import com.algorithm4.library.algorithm4library.Algorithm4Library;
+import com.hoho.android.usbserial.driver.UsbSerialDriver;
+import com.hoho.android.usbserial.driver.UsbSerialPort;
+import com.hoho.android.usbserial.driver.UsbSerialProber;
+import com.hoho.android.usbserial.util.SerialInputOutputManager;
+import com.ljfth.ecgviewlib.base.BaseActivity;
 
-import java.io.BufferedInputStream;
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.io.BufferedOutputStream;
-import java.io.BufferedWriter;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.security.spec.ECGenParameterSpec;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
-
-import com.hoho.android.usbserial.driver.UsbSerialDriver;
-import com.hoho.android.usbserial.driver.UsbSerialPort;
-import com.hoho.android.usbserial.driver.UsbSerialProber;
-import com.hoho.android.usbserial.util.HexDump;
-import com.hoho.android.usbserial.util.SerialInputOutputManager;
-
-import com.algorithm4.library.algorithm4library.Algorithm4Library;
-import com.ljfth.ecgviewlib.base.BaseActivity;
-
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -95,7 +82,7 @@ public class MainActivity extends BaseActivity implements View.OnTouchListener {
     private SerialInputOutputManager mSerialIoManager;
     private BroadcastReceiver mReceiver;
     private int dataCount = 0;
-    private byte [][] Data_ = new byte[10][112];
+    private byte[][] Data_ = new byte[10][112];
     private int dataSaveCount = 0;
     private String dataSavePath;
     private static int SaveCountMax = 1000;
@@ -122,23 +109,19 @@ public class MainActivity extends BaseActivity implements View.OnTouchListener {
                 }
             };
 
-    private void saveData(byte[] data){
+    private void saveData(byte[] data) {
         //存储数据
         dataSaveCount++;
-        if (dataSaveCount == 1 || outputStream == null || bufferedOutputStream == null)
-        {
+        if (dataSaveCount == 1 || outputStream == null || bufferedOutputStream == null) {
             dataSavePath = getDateSavePath();
-            try{
+            try {
                 outputStream = new FileOutputStream(dataSavePath);
                 bufferedOutputStream = new BufferedOutputStream(outputStream);
                 bufferedOutputStream.write(data);
-            }catch (Exception e)
-            {
+            } catch (Exception e) {
                 e.printStackTrace();
-            }
-            finally
-            {
-                if( bufferedOutputStream != null ){
+            } finally {
+                if (bufferedOutputStream != null) {
                     try {
                         bufferedOutputStream.close();
                         bufferedOutputStream = null;
@@ -147,7 +130,7 @@ public class MainActivity extends BaseActivity implements View.OnTouchListener {
                     }
                 }
 
-                if ( outputStream != null ) {
+                if (outputStream != null) {
                     try {
                         outputStream.close();
                         outputStream = null;
@@ -157,16 +140,12 @@ public class MainActivity extends BaseActivity implements View.OnTouchListener {
                 }
             }
         }
-        if (dataSaveCount <= SaveCountMax)
-        {
-            try{
+        if (dataSaveCount <= SaveCountMax) {
+            try {
                 bufferedOutputStream.write(data);
-            }catch (Exception e)
-            {
+            } catch (Exception e) {
                 e.printStackTrace();
-            }
-            finally
-            {
+            } finally {
                 if (dataSaveCount == SaveCountMax) {
                     dataSaveCount = 0;
                     if (bufferedOutputStream != null) {
@@ -192,8 +171,12 @@ public class MainActivity extends BaseActivity implements View.OnTouchListener {
     }
 
     private void updateReceivedData(byte[] data) {
-        double sampledData[][] = new double[12][250];
+        String str = String.format("dLen %d", data.length);
+        textTitle.setText(str);
+        double sampledData[][] = new double[12][256];
+        double sampleDataLen[] = new double[12];
         boolean isGetSampledData = false;
+        /*
         int controlNum = 1;
         if (dataCount < controlNum)
         {
@@ -207,11 +190,24 @@ public class MainActivity extends BaseActivity implements View.OnTouchListener {
             Algorithm4Library.getSampledData(sampledData);
             isGetSampledData = true;
         }
+        */
 
-        if(isGetSampledData)
-        {
+        try {
+            Algorithm4Library.addRecvData(data, data.length);
+            Algorithm4Library.getSampledData(sampledData, sampleDataLen);
+            //Algorithm4Library.getSampledData(sampledLen);
+            isGetSampledData = true;
+        } catch (Exception e) {
+            textTitle.setText("Alg error0 " + e.toString());
+        }
+
+        if (isGetSampledData) {
             double data1[] = new double[10];
-            Algorithm4Library.getValue(data1);
+            try {
+                Algorithm4Library.getValue(data1);
+            } catch (Exception e) {
+                textTitle.setText("Alg error1" + e.toString());
+            }
 
             mTextViewRate.setText(String.format("%.0f", data1[0]));
             mTextViewBPM.setText(String.format("%.1f", data1[1]));
@@ -231,8 +227,7 @@ public class MainActivity extends BaseActivity implements View.OnTouchListener {
 
         dataCount++;
 
-        if(isGetSampledData)
-        {
+        if (isGetSampledData) {
             //血氧
             for (int i = 1; i <= sampledData[1][0]; i++) {
                 bcgWaveView1.drawWave((int) sampledData[1][i]);
@@ -285,27 +280,24 @@ public class MainActivity extends BaseActivity implements View.OnTouchListener {
     private void writeIoManage(byte[] array) {
         String str = String.format("array len %d", array.length);
         textTitle.setText(str);
-        Log.i("test" ,"recv len "+str);
-        if (mPort != null)
-        {
+        Log.i("test", "recv len " + str);
+        if (mPort != null) {
             if (array.length > 0) {
                 try {
                     int nRet = mPort.write(array, 100);
                     str = String.format("w succ %d", nRet);
                     textTitle.setText(str);
                     //mTextViewHR.setText("write ok");
-                }
-                catch(IOException e2){
+                } catch (IOException e2) {
                     //ignore
                     str = String.format("write error ");
-                    textTitle.setText(str+e2.toString());
+                    textTitle.setText(str + e2.toString());
                     Log.e("test", "Serial testwrite error");
                     //mTextViewHR.setText("write Error");
                 }
             }
         }
     }
-
 
 
     @Override
@@ -336,11 +328,11 @@ public class MainActivity extends BaseActivity implements View.OnTouchListener {
     protected void initWidget() {
         super.initWidget();
         mTitleTextView = (TextView) findViewById(R.id.text_usb);
-        mTextViewRate  = (TextView) findViewById(R.id.graph_father1_data_text_left);
-        mTextViewBPM= (TextView) findViewById(R.id.graph_father1_data_text_right);
-        mTextViewHR= (TextView) findViewById(R.id.graph_father2_data_text);
-        mTextViewmmHg= (TextView) findViewById(R.id.graph_father3_data_text);
-        mTextViewRR= (TextView) findViewById(R.id.graph_father4_data_text_left);
+        mTextViewRate = (TextView) findViewById(R.id.graph_father1_data_text_left);
+        mTextViewBPM = (TextView) findViewById(R.id.graph_father1_data_text_right);
+        mTextViewHR = (TextView) findViewById(R.id.graph_father2_data_text);
+        mTextViewmmHg = (TextView) findViewById(R.id.graph_father3_data_text);
+        mTextViewRR = (TextView) findViewById(R.id.graph_father4_data_text_left);
         mTemperature = (TextView) findViewById(R.id.graph_father4_data_text_right);
         mTextViewPI = (TextView) findViewById(R.id.graph_father1_data_text_right1);
 
@@ -524,6 +516,7 @@ public class MainActivity extends BaseActivity implements View.OnTouchListener {
     @Override
     protected void onResume() {
         super.onResume();
+        startIoManager();
 
         if (mPort == null) {
             mTitleTextView.setText("No serial device.");
@@ -603,7 +596,7 @@ public class MainActivity extends BaseActivity implements View.OnTouchListener {
     //*************************一些命令*************************
 
     // 打开或关闭血氧
-    private  byte[] GeneralSpO2Command(boolean isOpen) {
+    private byte[] GeneralSpO2Command(boolean isOpen) {
 
         byte[] array = new byte[10];
 
@@ -626,7 +619,7 @@ public class MainActivity extends BaseActivity implements View.OnTouchListener {
     }
 
     // 打开或关闭心电和呼吸
-    private  byte[] GeneralECGCommand(boolean isOpen) {
+    private byte[] GeneralECGCommand(boolean isOpen) {
 
         byte[] array = new byte[10];
         //byte array[] = {0xAA, 0xAA, 0x00, 0x01, 0x42, 0x00, 0x00, 0x00, 0x55, 0x55};
@@ -650,7 +643,7 @@ public class MainActivity extends BaseActivity implements View.OnTouchListener {
     }
 
     // 打开或关闭温度
-    private  byte[] GeneralTempCommand(boolean isOpen) {
+    private byte[] GeneralTempCommand(boolean isOpen) {
 
         byte[] array = new byte[10];
         //byte array[] = {0xAA, 0xAA, 0x00, 0x01, 0x42, 0x00, 0x00, 0x00, 0x55, 0x55};
@@ -674,7 +667,7 @@ public class MainActivity extends BaseActivity implements View.OnTouchListener {
     }
 
     // 打开或关闭血压
-    private  byte[] GeneralNIBPCommand(boolean isOpen) {
+    private byte[] GeneralNIBPCommand(boolean isOpen) {
 
         byte[] array = new byte[10];
         //byte array[] = {0xAA, 0xAA, 0x00, 0x01, 0x42, 0x00, 0x00, 0x00, 0x55, 0x55};
