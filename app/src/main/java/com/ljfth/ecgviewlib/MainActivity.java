@@ -316,7 +316,7 @@ public class MainActivity extends BaseActivity implements View.OnTouchListener {
     private String getDateSavePath() {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
         String name = simpleDateFormat.format(new Date());
-        return getExternalCacheDir().getAbsolutePath() + name;
+        return getExternalCacheDir().getAbsolutePath() + "/" + name;
     }
 
     @Override
@@ -327,6 +327,7 @@ public class MainActivity extends BaseActivity implements View.OnTouchListener {
     @Override
     protected void initWidget() {
         super.initWidget();
+        Log.e("warner", "==============getExternalCacheDir().getAbsolutePath()================" + getDateSavePath());
         mTitleTextView = (TextView) findViewById(R.id.text_usb);
         mTextViewRate = (TextView) findViewById(R.id.graph_father1_data_text_left);
         mTextViewBPM = (TextView) findViewById(R.id.graph_father1_data_text_right);
@@ -543,7 +544,12 @@ public class MainActivity extends BaseActivity implements View.OnTouchListener {
             }
             mTitleTextView.setText("Serial device: " + mPort.getClass().getSimpleName());
 
+            // 血氧
             writeIoManage(GeneralSpO2Command(true));
+            // 心电、呼吸
+            writeIoManage(GeneralECGCommand(true));
+            // 血压
+            writeIoManage(GeneralNIBPCommand(true));
         }
         onDeviceStateChange();
 
