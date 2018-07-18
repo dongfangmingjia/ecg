@@ -735,6 +735,9 @@ public class MainActivity extends BaseActivity implements View.OnTouchListener {
                 textTitle.setText(name + "  -  " + bedNum + "床");
             } else if (TextUtils.equals(action, PatientInfoActivity.ACTION_CLEAR)) {
                 textTitle.setText("");
+            } else if (TextUtils.equals(action, ParamSettingActivity.ACTION_PARAM_SETTING)) {
+                // 参数设置完成
+
             }
         }
     }

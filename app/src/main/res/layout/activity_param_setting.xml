@@ -53,7 +53,7 @@
         android:id="@+id/tv_params"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="参数设置(速度：高：50mm/s，中：25mm/s，低：12.5mm/s)"
+        android:text="参数设置"
         android:textSize="15sp"
         android:textColor="@color/black"
         app:layout_constraintTop_toBottomOf="@+id/divide_line"

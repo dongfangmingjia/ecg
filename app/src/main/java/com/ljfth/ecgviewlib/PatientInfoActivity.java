@@ -48,25 +48,6 @@ public class PatientInfoActivity extends BaseActivity {
     @BindView(R.id.rb_women)
     RadioButton mRbWomen;
 
-    /**
-     * 性别常量（男）
-     */
-    public static final int SEX_MEN = 0x001;
-    /**
-     * 性别常量（女）
-     */
-    public static final int SEX_WOMEN = 0x002;
-    /**
-     * 起搏常量（是）
-     */
-    public static final int PACE_YES = 0x003;
-    /**
-     * 起搏常量（否）
-     */
-    public static final int PACE_NO = 0x004;
-
-
-
     private int mSex;
     private int mPace;
 
@@ -102,7 +83,7 @@ public class PatientInfoActivity extends BaseActivity {
         if (TextUtils.isEmpty(age)) {
             mEtAge.setText(age);
         }
-        if (sex == SEX_MEN) {
+        if (sex == Constant.SEX_MEN) {
             mRbMen.setChecked(true);
         } else {
             mRbWomen.setChecked(true);
@@ -143,7 +124,7 @@ public class PatientInfoActivity extends BaseActivity {
     private void clearData() {
         EcgSharedPrefrence.setName(PatientInfoActivity.this, null);
         EcgSharedPrefrence.setAge(PatientInfoActivity.this, null);
-        EcgSharedPrefrence.setSex(PatientInfoActivity.this, SEX_MEN);
+        EcgSharedPrefrence.setSex(PatientInfoActivity.this, Constant.SEX_MEN);
         EcgSharedPrefrence.setHospitalNum(PatientInfoActivity.this, null);
         EcgSharedPrefrence.setBedNum(PatientInfoActivity.this, null);
         EcgSharedPrefrence.setPaceMaking(PatientInfoActivity.this, false);
@@ -170,7 +151,7 @@ public class PatientInfoActivity extends BaseActivity {
         EcgSharedPrefrence.setSex(PatientInfoActivity.this, mSex);
         EcgSharedPrefrence.setHospitalNum(PatientInfoActivity.this, hospitalNum);
         EcgSharedPrefrence.setBedNum(PatientInfoActivity.this, bedNum);
-        EcgSharedPrefrence.setPaceMaking(PatientInfoActivity.this, mPace == PACE_YES);
+        EcgSharedPrefrence.setPaceMaking(PatientInfoActivity.this, mPace == Constant.PACE_YES);
 
         HashMap<String, String> params = new HashMap<>();
         params.put("action", ACTION_SAVE);
@@ -182,11 +163,11 @@ public class PatientInfoActivity extends BaseActivity {
         @Override
         public void onCheckedChanged(RadioGroup group, int checkedId) {
             if (checkedId == R.id.rb_men) {
-                mSex = SEX_MEN;
+                mSex = Constant.SEX_MEN;
             } else if (checkedId == R.id.rb_women) {
-                mSex = SEX_WOMEN;
+                mSex = Constant.SEX_WOMEN;
             } else {
-                mSex = SEX_MEN;
+                mSex = Constant.SEX_MEN;
             }
         }
     }
@@ -196,11 +177,11 @@ public class PatientInfoActivity extends BaseActivity {
         @Override
         public void onCheckedChanged(RadioGroup group, int checkedId) {
             if (checkedId == R.id.rb_yes) {
-                mPace = PACE_YES;
+                mPace = Constant.PACE_YES;
             } else if (checkedId == R.id.rb_no) {
-                mPace = PACE_NO;
+                mPace = Constant.PACE_NO;
             } else {
-                mPace = PACE_YES;
+                mPace = Constant.PACE_YES;
             }
         }
     }

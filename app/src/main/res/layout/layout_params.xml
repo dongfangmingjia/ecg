@@ -138,8 +138,9 @@
             android:background="@null"
             style="?android:attr/textViewStyle"
             android:textColor="@color/black"
-            android:hint="100"
-            android:gravity="center"/>
+            android:hint="Spo2上限100"
+            android:gravity="center"
+            android:inputType="number"/>
 
         <View
             android:layout_width="1dp"
@@ -154,50 +155,23 @@
             android:background="@null"
             style="?android:attr/textViewStyle"
             android:textColor="@color/black"
-            android:hint="100"
-            android:gravity="center"/>
+            android:hint="Spo2下限80"
+            android:gravity="center"
+            android:inputType="number"/>
 
         <View
             android:layout_width="1dp"
             android:layout_height="match_parent"
             android:background="@color/black"/>
 
-        <RadioGroup
-            android:id="@+id/rg_sp"
+        <TextView
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:orientation="horizontal">
-
-            <RadioButton
-                android:id="@+id/rb_sp_12"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="低"
-                android:layout_weight="1"
-                android:textSize="10sp"
-                android:lines="1"
-                android:textColor="@color/black"/>
-
-            <RadioButton
-                android:id="@+id/rb_sp_25"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="中"
-                android:layout_weight="1"
-                android:textSize="10sp"
-                android:textColor="@color/black"/>
-
-            <RadioButton
-                android:id="@+id/rb_sp_50"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="高"
-                android:layout_weight="1"
-                android:textSize="10sp"
-                android:textColor="@color/black"/>
-
-        </RadioGroup>
+            android:text="25mm/s"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            android:gravity="center"/>
 
         <View
             android:layout_width="1dp"
@@ -255,8 +229,9 @@
             android:background="@null"
             style="?android:attr/textViewStyle"
             android:textColor="@color/black"
-            android:hint="100"
-            android:gravity="center"/>
+            android:hint="Ecg上限130"
+            android:gravity="center"
+            android:inputType="number"/>
 
         <View
             android:layout_width="1dp"
@@ -271,50 +246,23 @@
             android:background="@null"
             style="?android:attr/textViewStyle"
             android:textColor="@color/black"
-            android:hint="100"
-            android:gravity="center"/>
+            android:hint="Ecg下限50"
+            android:gravity="center"
+            android:inputType="number"/>
 
         <View
             android:layout_width="1dp"
             android:layout_height="match_parent"
             android:background="@color/black"/>
 
-        <RadioGroup
-            android:id="@+id/rg_ecg"
+        <TextView
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:orientation="horizontal">
-
-            <RadioButton
-                android:id="@+id/rb_ecg_12"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="低"
-                android:layout_weight="1"
-                android:textSize="10sp"
-                android:lines="1"
-                android:textColor="@color/black"/>
-
-            <RadioButton
-                android:id="@+id/rb_ecg_25"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="中"
-                android:layout_weight="1"
-                android:textSize="10sp"
-                android:textColor="@color/black"/>
-
-            <RadioButton
-                android:id="@+id/rb_ecg_50"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="高"
-                android:layout_weight="1"
-                android:textSize="10sp"
-                android:textColor="@color/black"/>
-
-        </RadioGroup>
+            android:text="25mm/s"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            android:gravity="center"/>
 
         <View
             android:layout_width="1dp"
@@ -372,8 +320,9 @@
             android:background="@null"
             style="?android:attr/textViewStyle"
             android:textColor="@color/black"
-            android:hint="100"
-            android:gravity="center"/>
+            android:hint="resp上限30"
+            android:gravity="center"
+            android:inputType="number"/>
 
         <View
             android:layout_width="1dp"
@@ -388,50 +337,23 @@
             android:background="@null"
             style="?android:attr/textViewStyle"
             android:textColor="@color/black"
-            android:hint="100"
-            android:gravity="center"/>
+            android:hint="resp下限5"
+            android:gravity="center"
+            android:inputType="number"/>
 
         <View
             android:layout_width="1dp"
             android:layout_height="match_parent"
             android:background="@color/black"/>
 
-        <RadioGroup
-            android:id="@+id/rg_resp"
+        <TextView
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:orientation="horizontal">
-
-            <RadioButton
-                android:id="@+id/rb_resp_12"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="低"
-                android:layout_weight="1"
-                android:textSize="10sp"
-                android:lines="1"
-                android:textColor="@color/black"/>
-
-            <RadioButton
-                android:id="@+id/rb_resp_25"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="中"
-                android:layout_weight="1"
-                android:textSize="10sp"
-                android:textColor="@color/black"/>
-
-            <RadioButton
-                android:id="@+id/rb_resp_50"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="高"
-                android:layout_weight="1"
-                android:textSize="10sp"
-                android:textColor="@color/black"/>
-
-        </RadioGroup>
+            android:text="25mm/s"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            android:gravity="center"/>
 
         <View
             android:layout_width="1dp"
@@ -489,8 +411,9 @@
             android:background="@null"
             style="?android:attr/textViewStyle"
             android:textColor="@color/black"
-            android:hint="100"
-            android:gravity="center"/>
+            android:hint="temp上限38"
+            android:gravity="center"
+            android:inputType="number"/>
 
         <View
             android:layout_width="1dp"
@@ -505,8 +428,9 @@
             android:background="@null"
             style="?android:attr/textViewStyle"
             android:textColor="@color/black"
-            android:hint="100"
-            android:gravity="center"/>
+            android:hint="temp下限35"
+            android:gravity="center"
+            android:inputType="number"/>
 
         <View
             android:layout_width="1dp"
@@ -597,42 +521,14 @@
             android:layout_height="match_parent"
             android:background="@color/black"/>
 
-        <RadioGroup
-            android:id="@+id/rg_cnibp"
+        <TextView
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:orientation="horizontal">
-
-            <RadioButton
-                android:id="@+id/rb_cnibp_12"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="低"
-                android:layout_weight="1"
-                android:textSize="10sp"
-                android:lines="1"
-                android:textColor="@color/black"/>
-
-            <RadioButton
-                android:id="@+id/rb_cnibp_25"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="中"
-                android:layout_weight="1"
-                android:textSize="10sp"
-                android:textColor="@color/black"/>
-
-            <RadioButton
-                android:id="@+id/rb_cnibp_50"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="高"
-                android:layout_weight="1"
-                android:textSize="10sp"
-                android:textColor="@color/black"/>
-
-        </RadioGroup>
+            android:text="25mm/s"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            android:gravity="center"/>
 
         <View
             android:layout_width="1dp"
@@ -690,8 +586,9 @@
             android:background="@null"
             style="?android:attr/textViewStyle"
             android:textColor="@color/black"
-            android:hint="100"
-            android:gravity="center"/>
+            android:hint="sbp上限150"
+            android:gravity="center"
+            android:inputType="number"/>
 
         <View
             android:layout_width="1dp"
@@ -706,8 +603,9 @@
             android:background="@null"
             style="?android:attr/textViewStyle"
             android:textColor="@color/black"
-            android:hint="100"
-            android:gravity="center"/>
+            android:hint="sbp下限50"
+            android:gravity="center"
+            android:inputType="number"/>
 
         <View
             android:layout_width="1dp"
@@ -778,8 +676,9 @@
             android:background="@null"
             style="?android:attr/textViewStyle"
             android:textColor="@color/black"
-            android:hint="100"
-            android:gravity="center"/>
+            android:hint="dbp上限150"
+            android:gravity="center"
+            android:inputType="number"/>
 
         <View
             android:layout_width="1dp"
@@ -794,8 +693,9 @@
             android:background="@null"
             style="?android:attr/textViewStyle"
             android:textColor="@color/black"
-            android:hint="100"
-            android:gravity="center"/>
+            android:hint="dbp下限50"
+            android:gravity="center"
+            android:inputType="number"/>
 
         <View
             android:layout_width="1dp"
@@ -866,8 +766,9 @@
             android:background="@null"
             style="?android:attr/textViewStyle"
             android:textColor="@color/black"
-            android:hint="100"
-            android:gravity="center"/>
+            android:hint="map上限40"
+            android:gravity="center"
+            android:inputType="number"/>
 
         <View
             android:layout_width="1dp"
@@ -882,8 +783,9 @@
             android:background="@null"
             style="?android:attr/textViewStyle"
             android:textColor="@color/black"
-            android:hint="100"
-            android:gravity="center"/>
+            android:hint="map下限30"
+            android:gravity="center"
+            android:inputType="number"/>
 
         <View
             android:layout_width="1dp"
@@ -925,49 +827,11 @@
         android:background="@drawable/black_line_bg"
         android:paddingTop="3dp"
         android:paddingBottom="3dp"
-        android:paddingLeft="15dp"
-        android:paddingRight="15dp"
+        android:paddingLeft="35dp"
+        android:paddingRight="35dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/line9"
         app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginTop="10dp"/>
-
-    <View
-        android:id="@+id/divide_view"
-        android:layout_width="0dp"
-        android:layout_height="1dp"
-        android:background="@color/divide_color"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_save"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginTop="10dp"/>
-
-
-    <TextView
-        android:id="@+id/tv_tips"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="报警音量"
-        android:textSize="14sp"
-        android:textColor="@color/black"
-        app:layout_constraintTop_toBottomOf="@+id/divide_view"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="20dp"/>
-
-
-    <SeekBar
-        android:id="@+id/sb_volume"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="@+id/tv_tips"
-        app:layout_constraintBottom_toBottomOf="@+id/tv_tips"
-        app:layout_constraintLeft_toRightOf="@+id/tv_tips"
-        app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginRight="5dp"
-        android:progress="100"
-        android:max="100"/>
+        android:layout_marginTop="30dp"/>
 
 </android.support.constraint.ConstraintLayout>
