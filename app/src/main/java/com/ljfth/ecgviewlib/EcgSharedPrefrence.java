@@ -107,7 +107,7 @@ public class EcgSharedPrefrence {
 
 
     public static String getSpo2Upper(Context context) {
-        return getPrefrence(context).getString(Constant.SP_SPO2_UPPER, "");
+        return getPrefrence(context).getString(Constant.SP_SPO2_UPPER, String.valueOf(Constant.SPO2TOP));
     }
 
     /**
@@ -121,7 +121,7 @@ public class EcgSharedPrefrence {
 
 
     public static String getSpo2Floor(Context context) {
-        return getPrefrence(context).getString(Constant.SP_SPO2_FLOOR, "");
+        return getPrefrence(context).getString(Constant.SP_SPO2_FLOOR, String.valueOf(Constant.SPO2BOTTOM));
     }
 
     /**
@@ -135,7 +135,7 @@ public class EcgSharedPrefrence {
 
 
     public static String getEcgUpper(Context context) {
-        return getPrefrence(context).getString(Constant.SP_ECG_UPPER, "");
+        return getPrefrence(context).getString(Constant.SP_ECG_UPPER, String.valueOf(Constant.ECGTOP));
     }
 
     /**
@@ -149,7 +149,7 @@ public class EcgSharedPrefrence {
 
 
     public static String getEcgFloor(Context context) {
-        return getPrefrence(context).getString(Constant.SP_ECG_FLOOR, "");
+        return getPrefrence(context).getString(Constant.SP_ECG_FLOOR, String.valueOf(Constant.ECGBOTTOM));
     }
 
 
@@ -165,7 +165,7 @@ public class EcgSharedPrefrence {
 
 
     public static String getRespUpper(Context context) {
-        return getPrefrence(context).getString(Constant.SP_RESP_UPPER, "");
+        return getPrefrence(context).getString(Constant.SP_RESP_UPPER, String.valueOf(Constant.RESPTOP));
     }
 
     /**
@@ -179,7 +179,7 @@ public class EcgSharedPrefrence {
 
 
     public static String getRespFloor(Context context) {
-        return getPrefrence(context).getString(Constant.SP_RESP_FLOOR, "");
+        return getPrefrence(context).getString(Constant.SP_RESP_FLOOR, String.valueOf(Constant.RESPBOTTOM));
     }
 
 
@@ -194,7 +194,7 @@ public class EcgSharedPrefrence {
 
 
     public static String getTempUpper(Context context) {
-        return getPrefrence(context).getString(Constant.SP_TEMP_UPPER, "");
+        return getPrefrence(context).getString(Constant.SP_TEMP_UPPER, String.valueOf(Constant.TEMPTOP));
     }
 
     /**
@@ -208,7 +208,7 @@ public class EcgSharedPrefrence {
 
 
     public static String getTempFloor(Context context) {
-        return getPrefrence(context).getString(Constant.SP_TEMP_FLOOR, "");
+        return getPrefrence(context).getString(Constant.SP_TEMP_FLOOR, String.valueOf(Constant.TEMPBOTTOM));
     }
 
     /**
@@ -222,7 +222,7 @@ public class EcgSharedPrefrence {
 
 
     public static String getSbpUpper(Context context) {
-        return getPrefrence(context).getString(Constant.SP_SBP_UPPER, "");
+        return getPrefrence(context).getString(Constant.SP_SBP_UPPER, String.valueOf(Constant.SBPTOP));
     }
 
     /**
@@ -236,7 +236,7 @@ public class EcgSharedPrefrence {
 
 
     public static String getSbpFloor(Context context) {
-        return getPrefrence(context).getString(Constant.SP_SBP_FLOOR, "");
+        return getPrefrence(context).getString(Constant.SP_SBP_FLOOR, String.valueOf(Constant.SBPBOTTOM));
     }
 
 
@@ -251,7 +251,7 @@ public class EcgSharedPrefrence {
 
 
     public static String getDbpUpper(Context context) {
-        return getPrefrence(context).getString(Constant.SP_DBP_UPPER, "");
+        return getPrefrence(context).getString(Constant.SP_DBP_UPPER, String.valueOf(Constant.DBPTOP));
     }
 
     /**
@@ -265,7 +265,7 @@ public class EcgSharedPrefrence {
 
 
     public static String getDbpFloor(Context context) {
-        return getPrefrence(context).getString(Constant.SP_DBP_FLOOR, "");
+        return getPrefrence(context).getString(Constant.SP_DBP_FLOOR, String.valueOf(Constant.DBPBOTTOM));
     }
 
 
@@ -280,7 +280,7 @@ public class EcgSharedPrefrence {
 
 
     public static String getMapUpper(Context context) {
-        return getPrefrence(context).getString(Constant.SP_MAP_UPPER, "");
+        return getPrefrence(context).getString(Constant.SP_MAP_UPPER, String.valueOf(Constant.MAPTOP));
     }
 
     /**
@@ -294,7 +294,7 @@ public class EcgSharedPrefrence {
 
 
     public static String getMapFloor(Context context) {
-        return getPrefrence(context).getString(Constant.SP_MAP_FLOOR, "");
+        return getPrefrence(context).getString(Constant.SP_MAP_FLOOR, String.valueOf(Constant.MAPBOTTOM));
     }
 
     /**

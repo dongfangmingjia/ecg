@@ -9,8 +9,12 @@ import android.hardware.usb.UsbDeviceConnection;
 import android.hardware.usb.UsbManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.text.SpannableStringBuilder;
+import android.text.Spanned;
 import android.text.TextUtils;
+import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.MotionEvent;
@@ -28,6 +32,7 @@ import com.hoho.android.usbserial.driver.UsbSerialPort;
 import com.hoho.android.usbserial.driver.UsbSerialProber;
 import com.hoho.android.usbserial.util.SerialInputOutputManager;
 import com.ljfth.ecgviewlib.base.BaseActivity;
+import com.ljfth.ecgviewlib.utils.StringUtils;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -210,19 +215,68 @@ public class MainActivity extends BaseActivity implements View.OnTouchListener {
             }
 
             mTextViewRate.setText(String.format("%.0f", data1[0]));
+            if (data1[0] <= StringUtils.string2Int(EcgSharedPrefrence.getSpo2Upper(MainActivity.this)) &&
+                    data1[0] >= StringUtils.string2Int(EcgSharedPrefrence.getSpo2Floor(MainActivity.this))) {
+                mTextViewRate.setTextColor(ContextCompat.getColor(MainActivity.this, R.color.blue));
+            } else {
+                mTextViewRate.setTextColor(ContextCompat.getColor(MainActivity.this, R.color.red));
+            }
             mTextViewBPM.setText(String.format("%.1f", data1[1]));
             mTextViewPI.setText(String.format("%.1f", data1[2]));
 
             mTextViewHR.setText(String.format("%.1f", data1[3]));
+            if (data1[3] <= StringUtils.string2Int(EcgSharedPrefrence.getEcgUpper(MainActivity.this)) &&
+                    data1[3] >= StringUtils.string2Int(EcgSharedPrefrence.getEcgFloor(MainActivity.this))) {
+                mTextViewHR.setTextColor(ContextCompat.getColor(MainActivity.this, R.color.green));
+            } else {
+                mTextViewHR.setTextColor(ContextCompat.getColor(MainActivity.this, R.color.red));
+            }
 
             mTextViewRR.setText(String.format("%.1f", data1[4] < 0 ? 0 : data1[4]));
+            if (data1[4] <= StringUtils.string2Int(EcgSharedPrefrence.getRespUpper(MainActivity.this))
+                    && data1[4] >= StringUtils.string2Int(EcgSharedPrefrence.getRespFloor(MainActivity.this))) {
+                mTextViewRR.setTextColor(ContextCompat.getColor(MainActivity.this, R.color.resp_normal_color));
+            } else {
+                mTextViewRR.setTextColor(ContextCompat.getColor(MainActivity.this, R.color.red));
+            }
 
-//            if(data1[5] != -1)
-            {
-                mTemperature.setText(String.format("%.1f", data1[5] < 0 ? 0 : data1[5]));
+            mTemperature.setText(String.format("%.1f", data1[5] < 0 ? 0 : data1[5]));
+            if (data1[5] <= StringUtils.string2Int(EcgSharedPrefrence.getTempUpper(MainActivity.this))
+                    && data1[5] >= StringUtils.string2Int(EcgSharedPrefrence.getTempFloor(MainActivity.this))) {
+                mTemperature.setTextColor(ContextCompat.getColor(MainActivity.this, R.color.resp_normal_color));
+            } else {
+                mTemperature.setTextColor(ContextCompat.getColor(MainActivity.this, R.color.red));
             }
 
             mTextViewmmHg.setText((data1[7] < 0 ? 0 : data1[7]) + "/" + (data1[6] < 0 ? 0 : data1[6]));
+            String s = mTextViewmmHg.getText().toString().trim();
+            if (!TextUtils.isEmpty(s)) {
+                String sbpUpper = EcgSharedPrefrence.getSbpUpper(MainActivity.this);
+                String sbpFloor = EcgSharedPrefrence.getSbpFloor(MainActivity.this);
+                String dbpUpper = EcgSharedPrefrence.getDbpUpper(MainActivity.this);
+                String dbpFloor = EcgSharedPrefrence.getDbpFloor(MainActivity.this);
+                ForegroundColorSpan errorColor = new ForegroundColorSpan(Color.RED);
+                ForegroundColorSpan normalColor = new ForegroundColorSpan(Color.WHITE);
+                int index = s.indexOf("/");
+                SpannableStringBuilder builder = new SpannableStringBuilder();
+                builder.append(s);
+                if ((data1[7] > StringUtils.string2Int(sbpUpper) || data1[7] < StringUtils.string2Int(sbpFloor))
+                        && (data1[6] < StringUtils.string2Int(dbpUpper) && data1[6] > StringUtils.string2Int(dbpFloor))) {
+                    builder.setSpan(errorColor, 0, index, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+                    builder.setSpan(normalColor, index, s.length(), Spanned.SPAN_INCLUSIVE_INCLUSIVE);
+                } else if ((data1[7] < StringUtils.string2Int(sbpUpper) && data1[7] > StringUtils.string2Int(sbpFloor))
+                        && (data1[6] > StringUtils.string2Int(dbpUpper) || data1[6] < StringUtils.string2Int(dbpFloor))) {
+                    builder.setSpan(normalColor, 0, index, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+                    builder.setSpan(errorColor, index, s.length(), Spanned.SPAN_INCLUSIVE_INCLUSIVE);
+                } else if ((data1[7] < StringUtils.string2Int(sbpUpper) && data1[7] > StringUtils.string2Int(sbpFloor))
+                        && (data1[6] < StringUtils.string2Int(dbpUpper) && data1[6] > StringUtils.string2Int(dbpFloor))) {
+                    builder.setSpan(normalColor, 0, s.length(), Spanned.SPAN_INCLUSIVE_INCLUSIVE);
+                } else {
+                    builder.setSpan(errorColor, 0, s.length(), Spanned.SPAN_INCLUSIVE_INCLUSIVE);
+                }
+                mTextViewmmHg.setText(builder);
+            }
+
         }
 
         dataCount++;
