@@ -368,9 +368,9 @@ public class MainActivity extends BaseActivity implements View.OnTouchListener {
     }
 
     private String getDateSavePath() {
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
-        String name = simpleDateFormat.format(new Date());
-        return getExternalCacheDir().getAbsolutePath() + "/" + name;
+//        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//        String name = simpleDateFormat.format(new Date());
+        return getExternalCacheDir().getAbsolutePath() + "/" + System.currentTimeMillis();
     }
 
     @Override

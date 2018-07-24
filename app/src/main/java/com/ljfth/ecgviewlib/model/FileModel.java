@@ -5,6 +5,7 @@ public class FileModel {
     private String path;
     private String name;
     private String size;
+    private boolean isChecked = false;
 
     public String getPath() {
         return path;
@@ -28,5 +29,13 @@ public class FileModel {
 
     public void setSize(String size) {
         this.size = size;
+    }
+
+    public boolean isChecked() {
+        return isChecked;
+    }
+
+    public void setChecked(boolean checked) {
+        isChecked = checked;
     }
 }
