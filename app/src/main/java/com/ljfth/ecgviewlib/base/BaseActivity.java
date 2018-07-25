@@ -1,13 +1,30 @@
 package com.ljfth.ecgviewlib.base;
 
 import android.annotation.SuppressLint;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.hardware.usb.UsbManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Window;
+import android.widget.Toast;
+
+import com.algorithm4.library.algorithm4library.Algorithm4Library;
+import com.hoho.android.usbserial.driver.UsbSerialDriver;
+import com.hoho.android.usbserial.driver.UsbSerialPort;
+import com.hoho.android.usbserial.driver.UsbSerialProber;
+import com.hoho.android.usbserial.util.SerialInputOutputManager;
+import com.ljfth.ecgviewlib.MainActivity;
 
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
 
 import butterknife.ButterKnife;
 
@@ -16,6 +33,12 @@ import butterknife.ButterKnife;
  */
 
 public abstract class BaseActivity extends AppCompatActivity {
+
+	protected UsbManager mUsbManager;
+	protected UsbSerialPort mPort;
+	private ExecutorService mExecutor = Executors.newSingleThreadExecutor();
+	private SerialInputOutputManager mSerialIoManager;
+	private BroadcastReceiver mReceiver;
 
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -30,6 +53,19 @@ public abstract class BaseActivity extends AppCompatActivity {
 		} else {
 			finish();
 		}
+	}
+
+	@Override
+	protected void onNewIntent(Intent intent) {
+		super.onNewIntent(intent);
+		String action = intent.getAction();
+		if (action.equals("android.hardware.usb.action.USB_DEVICE_ATTACHED")) {
+			initPort();
+		}
+		if (action.equals("android.hardware.usb.action.USB_DEVICE_DETACHED")) {
+			NoDeviceDetached();
+		}
+//        Toast.makeText(this, "onNewIntent", Toast.LENGTH_SHORT).show();
 	}
 
 	/**初始化窗口*/
@@ -51,6 +87,27 @@ public abstract class BaseActivity extends AppCompatActivity {
 	/**初始化控件*/
 	protected void initWidget() {
 		ButterKnife.bind(this);
+		mUsbManager = (UsbManager) getSystemService(Context.USB_SERVICE);
+		initPort();
+
+		mReceiver = new BroadcastReceiver() {
+			@Override
+			public void onReceive(Context context, Intent intent) {
+				String curItentActionName = intent.getAction();
+				if (UsbManager.ACTION_USB_DEVICE_DETACHED.equals(curItentActionName)) {
+					NoDeviceDetached();
+				}
+			}
+		};
+		// ACTION_USB_DEVICE_DETACHED 这个事件监听需要通过广播，activity监听不到
+		IntentFilter filter = new IntentFilter();
+//        filter.addAction(UsbManager.ACTION_USB_DEVICE_ATTACHED);
+		filter.addAction(UsbManager.ACTION_USB_DEVICE_DETACHED);
+//        filter.addAction(ACTION_USB_DEVICE_PERMISSION);
+		registerReceiver(mReceiver, filter);
+
+		Log.e("test", "onCreate");
+		Algorithm4Library.InitSingleInstance();
 	}
 
 	/**初始化数据*/
@@ -87,4 +144,65 @@ public abstract class BaseActivity extends AppCompatActivity {
 		super.onBackPressed();
 		finish();
 	}
+
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		unregisterReceiver(mReceiver);
+	}
+
+	private void initPort() {
+		List<UsbSerialDriver> drivers =
+				UsbSerialProber.getDefaultProber().findAllDrivers(mUsbManager);
+		if (drivers != null) {
+			for (UsbSerialDriver driver : drivers) {
+				List<UsbSerialPort> ports = driver.getPorts();
+				if (ports != null && ports.size() == 1) {
+					mPort = ports.get(0);
+//                    Toast.makeText(this, "发现一个USB设备,Port = " + mPort, Toast.LENGTH_SHORT).show();
+				} else {
+					Toast.makeText(this, "没有发现USB,或者USB设备超过1个", Toast.LENGTH_SHORT).show();
+				}
+			}
+		}
+	}
+
+	protected void stopIoManager() {
+		if (mSerialIoManager != null) {
+//            Toast.makeText(MainActivity.this, "Stopping io manager ..", Toast.LENGTH_SHORT).show();
+			mSerialIoManager.stop();
+			mSerialIoManager = null;
+		}
+	}
+
+	protected void startIoManager() {
+		if (mPort != null) {
+//            Toast.makeText(MainActivity.this, "Starting io manager ..", Toast.LENGTH_SHORT).show();
+			mSerialIoManager = new SerialInputOutputManager(mPort, mListener);
+			mExecutor.submit(mSerialIoManager);
+		}
+	}
+
+	private final SerialInputOutputManager.Listener mListener =
+			new SerialInputOutputManager.Listener() {
+
+				@Override
+				public void onRunError(Exception e) {
+					Toast.makeText(BaseActivity.this, "Runner stopped.", Toast.LENGTH_SHORT).show();
+				}
+
+				@Override
+				public void onNewData(final byte[] data) {
+					runOnUiThread(new Runnable() {
+						@Override
+						public void run() {
+							updateReceivedData(data);
+						}
+					});
+				}
+			};
+
+	protected void updateReceivedData(byte[] data){}
+
+	protected void NoDeviceDetached(){}
 }

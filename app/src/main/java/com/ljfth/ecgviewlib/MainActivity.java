@@ -61,12 +61,7 @@ public class MainActivity extends BaseActivity implements View.OnTouchListener {
     private EcgWaveView bcgWaveView3;
     private EcgWaveView bcgWaveView4;
     private View view;
-    private Button btn_start;
-    private boolean flag = false;
-    private ScheduledExecutorService scheduledExecutor = Executors.newScheduledThreadPool(10);
 
-    private UsbManager mUsbManager;
-    private UsbSerialPort mPort;
     private TextView mTitleTextView;
     private TextView mUsbLog;
     private TextView mTemperature;
@@ -83,9 +78,6 @@ public class MainActivity extends BaseActivity implements View.OnTouchListener {
     @BindView(R.id.text_title)
     TextView textTitle;
 
-    private ExecutorService mExecutor = Executors.newSingleThreadExecutor();
-    private SerialInputOutputManager mSerialIoManager;
-    private BroadcastReceiver mReceiver;
     private int dataCount = 0;
     private byte[][] Data_ = new byte[10][112];
     private int dataSaveCount = 0;
@@ -95,24 +87,6 @@ public class MainActivity extends BaseActivity implements View.OnTouchListener {
     private FileOutputStream outputStream;
     private BufferedOutputStream bufferedOutputStream;
 
-    private final SerialInputOutputManager.Listener mListener =
-            new SerialInputOutputManager.Listener() {
-
-                @Override
-                public void onRunError(Exception e) {
-                    Toast.makeText(MainActivity.this, "Runner stopped.", Toast.LENGTH_SHORT).show();
-                }
-
-                @Override
-                public void onNewData(final byte[] data) {
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            updateReceivedData(data);
-                        }
-                    });
-                }
-            };
 
     private void saveData(byte[] data) {
         //存储数据
@@ -175,27 +149,13 @@ public class MainActivity extends BaseActivity implements View.OnTouchListener {
         }
     }
 
-    private void updateReceivedData(byte[] data) {
+    @Override
+    protected void updateReceivedData(byte[] data) {
         String str = String.format("dLen %d", data.length);
         textTitle.setText(str);
         double sampledData[][] = new double[12][256];
         double sampleDataLen[] = new double[12];
         boolean isGetSampledData = false;
-        /*
-        int controlNum = 1;
-        if (dataCount < controlNum)
-        {
-            Data_[dataCount] = data.clone();
-        }
-        else
-        {
-            Algorithm4Library.addData(Data_, 112, 10);
-            dataCount = 0;
-            Data_[dataCount] = data.clone();
-            Algorithm4Library.getSampledData(sampledData);
-            isGetSampledData = true;
-        }
-        */
 
         try {
             Algorithm4Library.addRecvData(data, data.length);
@@ -299,32 +259,6 @@ public class MainActivity extends BaseActivity implements View.OnTouchListener {
         saveData(data);
     }
 
-    public static String bcd2Str(byte[] bytes) {
-        StringBuffer temp = new StringBuffer(bytes.length * 2);
-        for (int i = 0; i < bytes.length; i++) {
-            temp.append((byte) ((bytes[i] & 0xf0) >>> 4));
-            temp.append((byte) (bytes[i] & 0x0f));
-        }
-        return temp.toString().substring(0, 1).equalsIgnoreCase("0") ? temp
-                .toString().substring(1) : temp.toString();
-    }
-
-    private void stopIoManager() {
-        if (mSerialIoManager != null) {
-//            Toast.makeText(MainActivity.this, "Stopping io manager ..", Toast.LENGTH_SHORT).show();
-            mSerialIoManager.stop();
-            mSerialIoManager = null;
-        }
-    }
-
-    private void startIoManager() {
-        if (mPort != null) {
-//            Toast.makeText(MainActivity.this, "Starting io manager ..", Toast.LENGTH_SHORT).show();
-            mSerialIoManager = new SerialInputOutputManager(mPort, mListener);
-            mExecutor.submit(mSerialIoManager);
-        }
-    }
-
     private void onDeviceStateChange() {
         stopIoManager();
         startIoManager();
@@ -354,23 +288,13 @@ public class MainActivity extends BaseActivity implements View.OnTouchListener {
     }
 
 
-    @Override
-    protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
-        String action = intent.getAction();
-        if (action.equals("android.hardware.usb.action.USB_DEVICE_ATTACHED")) {
-            initPort();
-        }
-        if (action.equals("android.hardware.usb.action.USB_DEVICE_DETACHED")) {
-            mTitleTextView.setText("No serial device.");
-        }
-//        Toast.makeText(this, "onNewIntent", Toast.LENGTH_SHORT).show();
+    private String getDateSavePath() {
+        return getExternalCacheDir().getAbsolutePath() + "/" + System.currentTimeMillis();
     }
 
-    private String getDateSavePath() {
-//        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-//        String name = simpleDateFormat.format(new Date());
-        return getExternalCacheDir().getAbsolutePath() + "/" + System.currentTimeMillis();
+    @Override
+    protected void NoDeviceDetached() {
+        mTitleTextView.setText("No serial device.");
     }
 
     @Override
@@ -381,7 +305,6 @@ public class MainActivity extends BaseActivity implements View.OnTouchListener {
     @Override
     protected void initWidget() {
         super.initWidget();
-        Log.e("warner", "==============getExternalCacheDir().getAbsolutePath()================" + getDateSavePath());
         mTitleTextView = (TextView) findViewById(R.id.text_usb);
         mTextViewRate = (TextView) findViewById(R.id.graph_father1_data_text_left);
         mTextViewBPM = (TextView) findViewById(R.id.graph_father1_data_text_right);
@@ -397,44 +320,7 @@ public class MainActivity extends BaseActivity implements View.OnTouchListener {
         linearLayout.setOnTouchListener(this);
 
         //ljfth:
-        mUsbManager = (UsbManager) getSystemService(Context.USB_SERVICE);
-        initPort();
         initView();
-
-        mReceiver = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                String curItentActionName = intent.getAction();
-                if (UsbManager.ACTION_USB_DEVICE_DETACHED.equals(curItentActionName)) {
-                    mTitleTextView.setText("No serial device.");
-                }
-            }
-        };
-        // ACTION_USB_DEVICE_DETACHED 这个事件监听需要通过广播，activity监听不到
-        IntentFilter filter = new IntentFilter();
-//        filter.addAction(UsbManager.ACTION_USB_DEVICE_ATTACHED);
-        filter.addAction(UsbManager.ACTION_USB_DEVICE_DETACHED);
-//        filter.addAction(ACTION_USB_DEVICE_PERMISSION);
-        registerReceiver(mReceiver, filter);
-
-        Log.e("test", "onCreate");
-        Algorithm4Library.InitSingleInstance();
-    }
-
-    private void initPort() {
-        List<UsbSerialDriver> drivers =
-                UsbSerialProber.getDefaultProber().findAllDrivers(mUsbManager);
-        if (drivers != null) {
-            for (UsbSerialDriver driver : drivers) {
-                List<UsbSerialPort> ports = driver.getPorts();
-                if (ports != null && ports.size() == 1) {
-                    mPort = ports.get(0);
-//                    Toast.makeText(this, "发现一个USB设备,Port = " + mPort, Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(this, "没有发现USB,或者USB设备超过1个", Toast.LENGTH_SHORT).show();
-                }
-            }
-        }
     }
 
     private void initView() {
@@ -648,7 +534,6 @@ public class MainActivity extends BaseActivity implements View.OnTouchListener {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        unregisterReceiver(mReceiver);
         EventBus.getDefault().unregister(this);
         Log.e("test", "onDestroy");
     }
