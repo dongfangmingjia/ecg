@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import com.ljfth.ecgviewlib.R;
@@ -22,6 +23,7 @@ import java.util.List;
 public class SaveListAdapter extends RecyclerView.Adapter<SaveListAdapter.SaveViewHolder> {
 
     private List<FileModel> mFileList;
+    private List<String> mPathList = new ArrayList<>();
     public static final String ACTION_ITEM_CLICK = "action_item_click";
 
     public SaveListAdapter(List<FileModel> list) {
@@ -44,6 +46,33 @@ public class SaveListAdapter extends RecyclerView.Adapter<SaveListAdapter.SaveVi
                 holder.tvFileName.setText(fileModel.getName());
                 holder.tvFileSize.setText(fileModel.getSize());
                 holder.mCheckBox.setChecked(fileModel.isChecked());
+                holder.mCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                        FileModel item = mFileList.get(position);
+                        if (isChecked) {
+                            mPathList.add(item.getPath());
+                        } else {
+                            if (mPathList != null && mPathList.size() > 0) {
+                                int removeIndex = -1;
+                                for (int i = 0; i < mPathList.size(); i++) {
+                                    String path = mPathList.get(i);
+                                    if (TextUtils.equals(path, item.getPath())) {
+                                        removeIndex = i;
+                                        break;
+                                    }
+                                }
+                                if (removeIndex >= 0 && removeIndex < mPathList.size()) {
+                                    mPathList.remove(removeIndex);
+                                }
+                            }
+                        }
+                        HashMap<String, Object> params = new HashMap<>();
+                        params.put("action", ACTION_ITEM_CLICK);
+                        params.put("list", mPathList);
+                        EventBus.getDefault().post(params);
+                    }
+                });
                 holder.clItemRoot.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -53,11 +82,26 @@ public class SaveListAdapter extends RecyclerView.Adapter<SaveListAdapter.SaveVi
                                 item.setChecked(!item.isChecked());
                                 notifyItemChanged(position);
                                 if (item.isChecked()) {
-                                    HashMap<String, String> params = new HashMap<>();
-                                    params.put("action", ACTION_ITEM_CLICK);
-                                    params.put("path", item.getPath());
-                                    EventBus.getDefault().post(params);
+                                    mPathList.add(item.getPath());
+                                } else {
+                                    if (mPathList != null && mPathList.size() > 0) {
+                                        int removeIndex = -1;
+                                        for (int i = 0; i < mPathList.size(); i++) {
+                                            String path = mPathList.get(i);
+                                            if (TextUtils.equals(path, item.getPath())) {
+                                                removeIndex = i;
+                                                break;
+                                            }
+                                        }
+                                        if (removeIndex >= 0 && removeIndex < mPathList.size()) {
+                                            mPathList.remove(removeIndex);
+                                        }
+                                    }
                                 }
+                                HashMap<String, Object> params = new HashMap<>();
+                                params.put("action", ACTION_ITEM_CLICK);
+                                params.put("list", mPathList);
+                                EventBus.getDefault().post(params);
                             }
                         }
                     }
@@ -78,6 +122,11 @@ public class SaveListAdapter extends RecyclerView.Adapter<SaveListAdapter.SaveVi
     public void setData(List<FileModel> list) {
         this.mFileList = list;
         notifyDataSetChanged();
+    }
+
+
+    public void clearPathList() {
+        mPathList.clear();
     }
 
     public class SaveViewHolder extends RecyclerView.ViewHolder {
