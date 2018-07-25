@@ -1,12 +1,8 @@
 package com.ljfth.ecgviewlib;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.graphics.Color;
 import android.hardware.usb.UsbDeviceConnection;
-import android.hardware.usb.UsbManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
@@ -20,17 +16,13 @@ import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewTreeObserver;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.algorithm4.library.algorithm4library.Algorithm4Library;
-import com.hoho.android.usbserial.driver.UsbSerialDriver;
 import com.hoho.android.usbserial.driver.UsbSerialPort;
-import com.hoho.android.usbserial.driver.UsbSerialProber;
-import com.hoho.android.usbserial.util.SerialInputOutputManager;
 import com.ljfth.ecgviewlib.base.BaseActivity;
 import com.ljfth.ecgviewlib.utils.StringUtils;
 
@@ -41,13 +33,7 @@ import org.greenrobot.eventbus.ThreadMode;
 import java.io.BufferedOutputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -258,35 +244,6 @@ public class MainActivity extends BaseActivity implements View.OnTouchListener {
 
         saveData(data);
     }
-
-    private void onDeviceStateChange() {
-        stopIoManager();
-        startIoManager();
-    }
-
-
-    private void writeIoManage(byte[] array) {
-        String str = String.format("array len %d", array.length);
-        textTitle.setText(str);
-        Log.i("test", "recv len " + str);
-        if (mPort != null) {
-            if (array.length > 0) {
-                try {
-                    int nRet = mPort.write(array, 100);
-                    str = String.format("w succ %d", nRet);
-                    textTitle.setText(str);
-                    //mTextViewHR.setText("write ok");
-                } catch (IOException e2) {
-                    //ignore
-                    str = String.format("write error ");
-                    textTitle.setText(str + e2.toString());
-                    Log.e("test", "Serial testwrite error");
-                    //mTextViewHR.setText("write Error");
-                }
-            }
-        }
-    }
-
 
     private String getDateSavePath() {
         return getExternalCacheDir().getAbsolutePath() + "/" + System.currentTimeMillis();

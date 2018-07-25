@@ -11,7 +11,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.Window;
 import android.widget.Toast;
 
 import com.algorithm4.library.algorithm4library.Algorithm4Library;
@@ -19,12 +18,11 @@ import com.hoho.android.usbserial.driver.UsbSerialDriver;
 import com.hoho.android.usbserial.driver.UsbSerialPort;
 import com.hoho.android.usbserial.driver.UsbSerialProber;
 import com.hoho.android.usbserial.util.SerialInputOutputManager;
-import com.ljfth.ecgviewlib.MainActivity;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
 
 import butterknife.ButterKnife;
 
@@ -205,4 +203,28 @@ public abstract class BaseActivity extends AppCompatActivity {
 	protected void updateReceivedData(byte[] data){}
 
 	protected void NoDeviceDetached(){}
+
+	protected void onDeviceStateChange() {
+		stopIoManager();
+		startIoManager();
+	}
+
+	protected void writeIoManage(byte[] array) {
+		String str = String.format("array len %d", array.length);
+		Log.i("test", "recv len " + str);
+		if (mPort != null) {
+			if (array.length > 0) {
+				try {
+					int nRet = mPort.write(array, 100);
+					str = String.format("w succ %d", nRet);
+					Log.e("test", "Serial testwrite success" + str);
+				} catch (IOException e2) {
+					//ignore
+					str = String.format("write error ");
+					Log.e("test", "Serial testwrite error" + str);
+					//mTextViewHR.setText("write Error");
+				}
+			}
+		}
+	}
 }
