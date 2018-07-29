@@ -145,6 +145,12 @@ public class MainActivity extends BaseActivity implements View.OnTouchListener {
 
         try {
             Algorithm4Library.addRecvData(data, data.length);
+            Log.e("ecg","===========传入数据长度===========" + data.length);
+            Log.e("ecg","===========获得命令结果===========" + data.length);
+            byte[] trabsfer = new byte[256];
+            boolean bool =  Algorithm4Library.GetCmdResult(0, trabsfer);
+            Log.e("ecg", "==============MainActivr返回指令===========" + Integer.toHexString(trabsfer[0]) + " index1 : " + Integer.toHexString(trabsfer[1] & 0xFF));
+
             Algorithm4Library.getSampledData(sampledData, sampleDataLen);
             //Algorithm4Library.getSampledData(sampledLen);
             isGetSampledData = true;
@@ -442,11 +448,11 @@ public class MainActivity extends BaseActivity implements View.OnTouchListener {
             mTitleTextView.setText("Serial device: " + mPort.getClass().getSimpleName());
 
             // 血氧
-            writeIoManage(GeneralSpO2Command(true));
+//            writeIoManage(GeneralSpO2Command(true));
             // 心电、呼吸
-            writeIoManage(GeneralECGCommand(true));
+//            writeIoManage(GeneralECGCommand(true));
             // 血压
-            writeIoManage(GeneralNIBPCommand(true));
+//            writeIoManage(GeneralNIBPCommand(true));
         }
         onDeviceStateChange();
 

@@ -78,4 +78,25 @@ public class Constant {
      * 起搏常量（否）
      */
     public static final int PACE_NO = 0x004;
+
+    /**搜索*/
+    public static final int TYPE_SEARCH = 0;
+    /**连接*/
+    public static final int TYPE_CONNECT = 1;
+    /**检测*/
+    public static final int TYPE_DETECTION = 2;
+    /**断开*/
+    public static final int TYPE_BREAK = 3;
+    /**重置*/
+    public static final int TYPE_RESTORATION = 4;
+
+
+    public static final String DEVICES_TYPE_BODYSTMSPO2 = "0";    //血氧
+    public static final String DEVICES_TYPE_BODYSTMECG = "1";     //心电
+    public static final String DEVICES_TYPE_BODYSTMNIBP_PWV = "2";    //连续血压
+    public static final String DEVICES_TYPE_BODYSTMRESP = "3";        //呼吸
+    public static final String DEVICES_TYPE_BODYSTMTEMP1 = "4";       //温度
+    public static final String DEVICES_TYPE_BODYSTMTEMP2 = "5";       //温度
+    public static final String DEVICES_TYPE_BODYSTMNIBP_VAL = "6";    //无创血压
+
 }

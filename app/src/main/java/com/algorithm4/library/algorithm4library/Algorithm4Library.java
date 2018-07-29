@@ -20,7 +20,7 @@ public class Algorithm4Library {
 
     public native static int addRecvData(byte data[], int nDataLen);
 
-    public native static boolean GeneralCmd4Dev(int cmdType, byte cmdTransfer[]);
+    public native static int GeneralCmd4Dev(int cmdType, byte cmdTransfer[]);
 
     public native static boolean GetCmdResult(int cmdType, byte cmdTransfer[]);
 }  

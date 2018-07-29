@@ -191,6 +191,10 @@ public abstract class BaseActivity extends AppCompatActivity {
 
 				@Override
 				public void onNewData(final byte[] data) {
+					Log.e("ecg","===========返回数据接收长度===========" + data.length);
+					for (byte b : data) {
+						Log.e("ecg","===========返回数据接收===========" + Integer.toHexString(b & 0xFF));
+					}
 					runOnUiThread(new Runnable() {
 						@Override
 						public void run() {
