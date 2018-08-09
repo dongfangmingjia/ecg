@@ -54,6 +54,8 @@
             android:screenOrientation="landscape" />
         <activity android:name=".DevicesActivity"
             android:screenOrientation="landscape" />
+
+        <service android:name=".base.UsbService" />
     </application>
 
 </manifest>
