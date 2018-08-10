@@ -5,6 +5,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.hardware.usb.UsbDeviceConnection;
 import android.hardware.usb.UsbManager;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
@@ -27,7 +28,26 @@ public class UsbService extends Service {
     private UsbSerialPort mPort;
     private ExecutorService mExecutor = Executors.newSingleThreadExecutor();
     private SerialInputOutputManager mSerialIoManager;
-    private BroadcastReceiver mReceiver;
+
+    private BroadcastReceiver mReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String curItentActionName = intent.getAction();
+            if (UsbManager.ACTION_USB_DEVICE_DETACHED.equals(curItentActionName)) {
+                // 硬件断开连接
+                if (mSerialIoManager != null) {
+                    mSerialIoManager.stop();
+                    mSerialIoManager = null;
+                }
+            } else if (UsbManager.ACTION_USB_DEVICE_ATTACHED.equals(curItentActionName)) {
+                // 硬件连接
+                if (mPort != null) {
+                    mSerialIoManager = new SerialInputOutputManager(mPort, mListener);
+                    mExecutor.submit(mSerialIoManager);
+                }
+            }
+        }
+    };
 
     @Nullable
     @Override
@@ -42,15 +62,6 @@ public class UsbService extends Service {
         mUsbManager = (UsbManager) getSystemService(Context.USB_SERVICE);
         initPort();
 
-        mReceiver = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                String curItentActionName = intent.getAction();
-                if (UsbManager.ACTION_USB_DEVICE_DETACHED.equals(curItentActionName)) {
-
-                }
-            }
-        };
         // ACTION_USB_DEVICE_DETACHED 这个事件监听需要通过广播，activity监听不到
         IntentFilter filter = new IntentFilter();
 //        filter.addAction(UsbManager.ACTION_USB_DEVICE_ATTACHED);
@@ -65,6 +76,25 @@ public class UsbService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        if (mPort != null) {
+            mSerialIoManager = new SerialInputOutputManager(mPort, mListener);
+            mExecutor.submit(mSerialIoManager);
+            UsbDeviceConnection connection = mUsbManager.openDevice(mPort.getDriver().getDevice());
+            if (connection != null) {
+                try {
+                    mPort.open(connection);
+                    mPort.setParameters(230400, 8, UsbSerialPort.STOPBITS_1, UsbSerialPort.PARITY_NONE);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    try {
+                        mPort.close();
+                    } catch (Exception e1) {
+                        e1.printStackTrace();
+                    }
+                    mPort = null;
+                }
+            }
+        }
         return super.onStartCommand(intent, flags, startId);
     }
 
@@ -72,6 +102,7 @@ public class UsbService extends Service {
     @Override
     public void onDestroy() {
         super.onDestroy();
+        unregisterReceiver(mReceiver);
     }
 
 
@@ -90,4 +121,22 @@ public class UsbService extends Service {
             }
         }
     }
+
+    /**
+     * 硬件连接后数据接收的回调
+     */
+    private SerialInputOutputManager.Listener mListener = new SerialInputOutputManager.Listener() {
+
+        @Override
+        public void onNewData(byte[] data) {
+            if (data != null) {
+
+            }
+        }
+
+        @Override
+        public void onRunError(Exception e) {
+
+        }
+    };
 }
