@@ -1,9 +1,13 @@
 package com.ljfth.ecgviewlib;
 
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.graphics.Color;
 import android.hardware.usb.UsbDeviceConnection;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -24,6 +28,7 @@ import android.widget.Toast;
 import com.algorithm4.library.algorithm4library.Algorithm4Library;
 import com.hoho.android.usbserial.driver.UsbSerialPort;
 import com.ljfth.ecgviewlib.base.BaseActivity;
+import com.ljfth.ecgviewlib.base.UsbService;
 import com.ljfth.ecgviewlib.utils.StringUtils;
 
 import org.greenrobot.eventbus.EventBus;
@@ -72,7 +77,9 @@ public class MainActivity extends BaseActivity implements View.OnTouchListener {
 
     private FileOutputStream outputStream;
     private BufferedOutputStream bufferedOutputStream;
+    private Intent mServiceIntent;
 
+    private UsbConnection mConnection = new UsbConnection();
 
     private void saveData(byte[] data) {
         //存储数据
@@ -286,6 +293,15 @@ public class MainActivity extends BaseActivity implements View.OnTouchListener {
         initView();
     }
 
+
+    @Override
+    protected void initData() {
+        super.initData();
+        mServiceIntent = new Intent(MainActivity.this, UsbService.class);
+        startService(mServiceIntent);
+//        bindService(mServiceIntent, mConnection, Context.BIND_AUTO_CREATE);
+    }
+
     private void initView() {
         view.getViewTreeObserver().addOnGlobalLayoutListener(
                 new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -420,58 +436,58 @@ public class MainActivity extends BaseActivity implements View.OnTouchListener {
     @Override
     protected void onResume() {
         super.onResume();
-        startIoManager();
-
-        if (mPort == null) {
-            mTitleTextView.setText("No serial device.");
-        } else {
-            UsbDeviceConnection connection = mUsbManager.openDevice(mPort.getDriver().getDevice());
-            if (connection == null) {
-                mTitleTextView.setText("Opening device failed");
-                return;
-            }
-
-            try {
-                mPort.open(connection);
-                mPort.setParameters(230400, 8, UsbSerialPort.STOPBITS_1, UsbSerialPort.PARITY_NONE);
-            } catch (IOException e) {
-                Toast.makeText(MainActivity.this, "Error setting up device: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                mTitleTextView.setText("Error opening device: " + e.getMessage());
-                try {
-                    mPort.close();
-                } catch (IOException e2) {
-                    // Ignore.
-                }
-                mPort = null;
-                return;
-            }
-            mTitleTextView.setText("Serial device: " + mPort.getClass().getSimpleName());
-
-            // 血氧
-//            writeIoManage(GeneralSpO2Command(true));
-            // 心电、呼吸
-//            writeIoManage(GeneralECGCommand(true));
-            // 血压
-//            writeIoManage(GeneralNIBPCommand(true));
-        }
-        onDeviceStateChange();
-
-        Log.e("test", "onResume");
+//        startIoManager();
+//
+//        if (mPort == null) {
+//            mTitleTextView.setText("No serial device.");
+//        } else {
+//            UsbDeviceConnection connection = mUsbManager.openDevice(mPort.getDriver().getDevice());
+//            if (connection == null) {
+//                mTitleTextView.setText("Opening device failed");
+//                return;
+//            }
+//
+//            try {
+//                mPort.open(connection);
+//                mPort.setParameters(230400, 8, UsbSerialPort.STOPBITS_1, UsbSerialPort.PARITY_NONE);
+//            } catch (IOException e) {
+//                Toast.makeText(MainActivity.this, "Error setting up device: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+//                mTitleTextView.setText("Error opening device: " + e.getMessage());
+//                try {
+//                    mPort.close();
+//                } catch (IOException e2) {
+//                    // Ignore.
+//                }
+//                mPort = null;
+//                return;
+//            }
+//            mTitleTextView.setText("Serial device: " + mPort.getClass().getSimpleName());
+//
+//            // 血氧
+////            writeIoManage(GeneralSpO2Command(true));
+//            // 心电、呼吸
+////            writeIoManage(GeneralECGCommand(true));
+//            // 血压
+////            writeIoManage(GeneralNIBPCommand(true));
+//        }
+//        onDeviceStateChange();
+//
+//        Log.e("test", "onResume");
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        mDrawerLayout.closeDrawer(Gravity.START);
-        stopIoManager();
-        if (mPort != null) {
-            try {
-                mPort.close();
-            } catch (IOException e) {
-                // Ignore.
-            }
-        }
-        Log.e("test", "onPause");
+//        mDrawerLayout.closeDrawer(Gravity.START);
+//        stopIoManager();
+//        if (mPort != null) {
+//            try {
+//                mPort.close();
+//            } catch (IOException e) {
+//                // Ignore.
+//            }
+//        }
+//        Log.e("test", "onPause");
     }
 
 
@@ -497,6 +513,8 @@ public class MainActivity extends BaseActivity implements View.OnTouchListener {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+//        unbindService(mConnection);
+        stopService(mServiceIntent);
         EventBus.getDefault().unregister(this);
         Log.e("test", "onDestroy");
     }
@@ -635,6 +653,7 @@ public class MainActivity extends BaseActivity implements View.OnTouchListener {
                 String name = EcgSharedPrefrence.getName(MainActivity.this);
                 String bedNum = EcgSharedPrefrence.getBedNum(MainActivity.this);
                 textTitle.setText(name + "  -  " + bedNum + "床");
+                Constant.SAVE_PATH = getExternalCacheDir().getAbsolutePath() + "/" + name;
             } else if (TextUtils.equals(action, PatientInfoActivity.ACTION_CLEAR)) {
                 textTitle.setText("");
             } else if (TextUtils.equals(action, ParamSettingActivity.ACTION_PARAM_SETTING)) {
@@ -643,4 +662,32 @@ public class MainActivity extends BaseActivity implements View.OnTouchListener {
             }
         }
     }
+
+
+
+    private class UsbConnection implements ServiceConnection {
+
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            Log.e("warner", "===========onServiceConnected===========");
+            UsbService.UsbBinder binder = (UsbService.UsbBinder) service;
+            UsbService usbService = binder.getService();
+            Log.e("warner", "===========发送指令===========");
+            usbService.writeIoManage(GeneralSpO2Command(true));
+            usbService.setCallBackListener(mCallBackListener);
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+
+        }
+    }
+
+
+    private UsbService.DataCallBackListener mCallBackListener = new UsbService.DataCallBackListener() {
+        @Override
+        public void callBack(byte[] data) {
+            updateReceivedData(data);
+        }
+    };
 }

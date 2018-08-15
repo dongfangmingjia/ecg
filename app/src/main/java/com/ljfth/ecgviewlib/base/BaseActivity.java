@@ -56,13 +56,13 @@ public abstract class BaseActivity extends AppCompatActivity {
 	@Override
 	protected void onNewIntent(Intent intent) {
 		super.onNewIntent(intent);
-		String action = intent.getAction();
-		if (action.equals("android.hardware.usb.action.USB_DEVICE_ATTACHED")) {
-			initPort();
-		}
-		if (action.equals("android.hardware.usb.action.USB_DEVICE_DETACHED")) {
-			NoDeviceDetached();
-		}
+//		String action = intent.getAction();
+//		if (action.equals("android.hardware.usb.action.USB_DEVICE_ATTACHED")) {
+//			initPort();
+//		}
+//		if (action.equals("android.hardware.usb.action.USB_DEVICE_DETACHED")) {
+//			NoDeviceDetached();
+//		}
 //        Toast.makeText(this, "onNewIntent", Toast.LENGTH_SHORT).show();
 	}
 
@@ -85,27 +85,27 @@ public abstract class BaseActivity extends AppCompatActivity {
 	/**初始化控件*/
 	protected void initWidget() {
 		ButterKnife.bind(this);
-		mUsbManager = (UsbManager) getSystemService(Context.USB_SERVICE);
-		initPort();
-
-		mReceiver = new BroadcastReceiver() {
-			@Override
-			public void onReceive(Context context, Intent intent) {
-				String curItentActionName = intent.getAction();
-				if (UsbManager.ACTION_USB_DEVICE_DETACHED.equals(curItentActionName)) {
-					NoDeviceDetached();
-				}
-			}
-		};
-		// ACTION_USB_DEVICE_DETACHED 这个事件监听需要通过广播，activity监听不到
-		IntentFilter filter = new IntentFilter();
-//        filter.addAction(UsbManager.ACTION_USB_DEVICE_ATTACHED);
-		filter.addAction(UsbManager.ACTION_USB_DEVICE_DETACHED);
-//        filter.addAction(ACTION_USB_DEVICE_PERMISSION);
-		registerReceiver(mReceiver, filter);
-
-		Log.e("test", "onCreate");
-		Algorithm4Library.InitSingleInstance();
+//		mUsbManager = (UsbManager) getSystemService(Context.USB_SERVICE);
+//		initPort();
+//
+//		mReceiver = new BroadcastReceiver() {
+//			@Override
+//			public void onReceive(Context context, Intent intent) {
+//				String curItentActionName = intent.getAction();
+//				if (UsbManager.ACTION_USB_DEVICE_DETACHED.equals(curItentActionName)) {
+//					NoDeviceDetached();
+//				}
+//			}
+//		};
+//		// ACTION_USB_DEVICE_DETACHED 这个事件监听需要通过广播，activity监听不到
+//		IntentFilter filter = new IntentFilter();
+////        filter.addAction(UsbManager.ACTION_USB_DEVICE_ATTACHED);
+//		filter.addAction(UsbManager.ACTION_USB_DEVICE_DETACHED);
+////        filter.addAction(ACTION_USB_DEVICE_PERMISSION);
+//		registerReceiver(mReceiver, filter);
+//
+//		Log.e("test", "onCreate");
+//		Algorithm4Library.InitSingleInstance();
 	}
 
 	/**初始化数据*/
@@ -146,7 +146,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
-		unregisterReceiver(mReceiver);
+//		unregisterReceiver(mReceiver);
 	}
 
 	private void initPort() {

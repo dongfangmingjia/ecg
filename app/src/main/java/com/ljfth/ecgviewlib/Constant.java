@@ -99,4 +99,6 @@ public class Constant {
     public static final String DEVICES_TYPE_BODYSTMTEMP2 = "5";       //温度
     public static final String DEVICES_TYPE_BODYSTMNIBP_VAL = "6";    //无创血压
 
+    public static String SAVE_PATH;
+
 }
