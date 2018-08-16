@@ -136,7 +136,7 @@ public class SaveActivity extends BaseActivity {
             return;
         }
 
-        final String filePath = getExternalCacheDir().getAbsolutePath();
+        final String filePath = Constant.SAVE_PATH;
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {

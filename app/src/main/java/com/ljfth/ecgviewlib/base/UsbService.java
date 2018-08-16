@@ -11,6 +11,7 @@ import android.os.Binder;
 import android.os.Debug;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -21,6 +22,7 @@ import com.hoho.android.usbserial.driver.UsbSerialProber;
 import com.hoho.android.usbserial.util.SerialInputOutputManager;
 import com.ljfth.ecgviewlib.Constant;
 
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -33,6 +35,7 @@ public class UsbService extends Service {
     private ExecutorService mExecutor = Executors.newSingleThreadExecutor();
     private SerialInputOutputManager mSerialIoManager;
     private DataCallBackListener mCallBackListener;
+    private long mReciveDataTime = 0;
 
     private BroadcastReceiver mReceiver = new BroadcastReceiver() {
         @Override
@@ -79,12 +82,15 @@ public class UsbService extends Service {
 
         Log.e("test", "onCreate");
         Algorithm4Library.InitSingleInstance();
+
+        connection();
+
     }
 
-
-    @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
-        Log.e("warner", "==============onStartCommand============");
+    /**
+     * 连接USB驱动
+     */
+    private void connection() {
         if (mPort != null) {
             mSerialIoManager = new SerialInputOutputManager(mPort, mListener);
             mExecutor.submit(mSerialIoManager);
@@ -103,9 +109,15 @@ public class UsbService extends Service {
                     }
                     mPort = null;
                 }
-                writeIoManage(GeneralSpO2Command(true));
             }
         }
+    }
+
+
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        Log.e("warner", "==============onStartCommand============");
+        writeIoManage(GeneralSpO2Command(true));
         return super.onStartCommand(intent, flags, startId);
     }
 
@@ -162,14 +174,34 @@ public class UsbService extends Service {
         }
     };
 
-    private void saveData(byte[] data) {
+    private void saveData(final byte[] data) {
         new Thread(){
             @Override
             public void run() {
-                String path = Constant.SAVE_PATH + "/" + System.currentTimeMillis();
-
+                if (TextUtils.isEmpty(Constant.SAVE_PATH)) {
+                    return;
+                }
+                String path = null;
+                if (System.currentTimeMillis() - mReciveDataTime > 60000) {
+                    path = Constant.SAVE_PATH + "/" + System.currentTimeMillis();
+                }
+                writeData2File(path, data);
             }
         }.start();
+    }
+
+    /**写数据到文件*/
+    private void writeData2File(String path, byte[] data) {
+        if (TextUtils.isEmpty(path)) {
+            return;
+        }
+        try {
+            FileOutputStream outputStream = openFileOutput(path, MODE_PRIVATE);
+            outputStream.write(data);
+            outputStream.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void writeIoManage(byte[] array) {
