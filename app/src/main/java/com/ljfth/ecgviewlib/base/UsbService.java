@@ -34,7 +34,6 @@ public class UsbService extends Service {
     private UsbSerialPort mPort;
     private ExecutorService mExecutor = Executors.newSingleThreadExecutor();
     private SerialInputOutputManager mSerialIoManager;
-    private DataCallBackListener mCallBackListener;
     private long mReciveDataTime = 0;
 
     private BroadcastReceiver mReceiver = new BroadcastReceiver() {
@@ -75,9 +74,7 @@ public class UsbService extends Service {
 
         // ACTION_USB_DEVICE_DETACHED 这个事件监听需要通过广播，activity监听不到
         IntentFilter filter = new IntentFilter();
-//        filter.addAction(UsbManager.ACTION_USB_DEVICE_ATTACHED);
         filter.addAction(UsbManager.ACTION_USB_DEVICE_DETACHED);
-//        filter.addAction(ACTION_USB_DEVICE_PERMISSION);
         registerReceiver(mReceiver, filter);
 
         Log.e("test", "onCreate");
@@ -99,7 +96,7 @@ public class UsbService extends Service {
                 try {
                     mPort.open(connection);
                     mPort.setParameters(230400, 8, UsbSerialPort.STOPBITS_1, UsbSerialPort.PARITY_NONE);
-                    Log.e("warner", "==============onStartCommand   open============");
+                    Log.e("warner", "==============connection   open============");
                 } catch (Exception e) {
                     e.printStackTrace();
                     try {
@@ -117,8 +114,7 @@ public class UsbService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.e("warner", "==============onStartCommand============");
-        writeIoManage(GeneralSpO2Command(true));
-        return super.onStartCommand(intent, flags, startId);
+        return START_REDELIVER_INTENT;
     }
 
 
@@ -132,8 +128,8 @@ public class UsbService extends Service {
 
     public class UsbBinder extends Binder {
 
-        public UsbService getService() {
-            return UsbService.this;
+        public void writeManage(byte[] array) {
+            writeIoManage(array);
         }
 
     }
@@ -162,9 +158,6 @@ public class UsbService extends Service {
         @Override
         public void onNewData(byte[] data) {
             Log.e("warner", "============接收数据==========" + data.length);
-//            if (mCallBackListener != null) {
-//                mCallBackListener.callBack(data);
-//            }
             saveData(data);
         }
 
@@ -204,9 +197,10 @@ public class UsbService extends Service {
         }
     }
 
-    public void writeIoManage(byte[] array) {
+    private void writeIoManage(byte[] array) {
         String str = String.format("array len %d", array.length);
         Log.e("warner", "recv len " + str);
+        Log.e("warner", "mPort " + mPort);
         if (mPort != null) {
             if (array.length > 0) {
                 try {
@@ -221,37 +215,5 @@ public class UsbService extends Service {
                 }
             }
         }
-    }
-
-    // 打开或关闭血氧
-    private byte[] GeneralSpO2Command(boolean isOpen) {
-
-        byte[] array = new byte[10];
-
-        array[0] = (byte) (0xAA);
-        array[1] = (byte) (0xAA);
-        array[2] = (byte) (0x00);
-        array[3] = (byte) (0x01);
-        if (isOpen) {
-            array[4] = (byte) (0x42);
-        } else {
-            array[4] = (byte) (0x43);
-        }
-        array[5] = (byte) (0x00);
-        array[6] = (byte) (0x00);
-        array[7] = (byte) (0x00);
-        array[8] = (byte) (0x55);
-        array[9] = (byte) (0x55);
-
-        return array;
-    }
-
-    public void setCallBackListener(DataCallBackListener listener) {
-        this.mCallBackListener = listener;
-    }
-
-    public interface DataCallBackListener {
-
-        void callBack(byte[] data);
     }
 }

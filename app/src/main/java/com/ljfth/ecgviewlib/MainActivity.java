@@ -80,6 +80,7 @@ public class MainActivity extends BaseActivity implements View.OnTouchListener {
     private Intent mServiceIntent;
 
     private UsbConnection mConnection = new UsbConnection();
+    private UsbService.UsbBinder mBinder;
 
     private void saveData(byte[] data) {
         //存储数据
@@ -298,8 +299,7 @@ public class MainActivity extends BaseActivity implements View.OnTouchListener {
     protected void initData() {
         super.initData();
         mServiceIntent = new Intent(MainActivity.this, UsbService.class);
-        startService(mServiceIntent);
-//        bindService(mServiceIntent, mConnection, Context.BIND_AUTO_CREATE);
+        bindService(mServiceIntent, mConnection, Context.BIND_AUTO_CREATE);
     }
 
     private void initView() {
@@ -513,8 +513,8 @@ public class MainActivity extends BaseActivity implements View.OnTouchListener {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-//        unbindService(mConnection);
-        stopService(mServiceIntent);
+        unbindService(mConnection);
+//        stopService(mServiceIntent);
         EventBus.getDefault().unregister(this);
         Log.e("test", "onDestroy");
     }
@@ -670,24 +670,14 @@ public class MainActivity extends BaseActivity implements View.OnTouchListener {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
             Log.e("warner", "===========onServiceConnected===========");
-            UsbService.UsbBinder binder = (UsbService.UsbBinder) service;
-            UsbService usbService = binder.getService();
-            Log.e("warner", "===========发送指令===========");
-            usbService.writeIoManage(GeneralSpO2Command(true));
-            usbService.setCallBackListener(mCallBackListener);
+            mBinder = (UsbService.UsbBinder) service;
+            mBinder.writeManage(GeneralSpO2Command(true));
         }
 
         @Override
         public void onServiceDisconnected(ComponentName name) {
-
+            mBinder = null;
         }
     }
 
-
-    private UsbService.DataCallBackListener mCallBackListener = new UsbService.DataCallBackListener() {
-        @Override
-        public void callBack(byte[] data) {
-            updateReceivedData(data);
-        }
-    };
 }
