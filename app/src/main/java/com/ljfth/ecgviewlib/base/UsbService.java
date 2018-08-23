@@ -77,7 +77,6 @@ public class UsbService extends Service {
         filter.addAction(UsbManager.ACTION_USB_DEVICE_DETACHED);
         registerReceiver(mReceiver, filter);
 
-        Log.e("test", "onCreate");
         Algorithm4Library.InitSingleInstance();
 
         connection();
@@ -163,7 +162,8 @@ public class UsbService extends Service {
 
         @Override
         public void onRunError(Exception e) {
-
+            Log.e("warner", "============接收数据 Exception==========");
+            e.printStackTrace();
         }
     };
 

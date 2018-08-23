@@ -298,8 +298,8 @@ public class MainActivity extends BaseActivity implements View.OnTouchListener {
     @Override
     protected void initData() {
         super.initData();
-        mServiceIntent = new Intent(MainActivity.this, UsbService.class);
-        bindService(mServiceIntent, mConnection, Context.BIND_AUTO_CREATE);
+//        mServiceIntent = new Intent(MainActivity.this, UsbService.class);
+//        bindService(mServiceIntent, mConnection, Context.BIND_AUTO_CREATE);
     }
 
     private void initView() {
@@ -436,58 +436,58 @@ public class MainActivity extends BaseActivity implements View.OnTouchListener {
     @Override
     protected void onResume() {
         super.onResume();
-//        startIoManager();
-//
-//        if (mPort == null) {
-//            mTitleTextView.setText("No serial device.");
-//        } else {
-//            UsbDeviceConnection connection = mUsbManager.openDevice(mPort.getDriver().getDevice());
-//            if (connection == null) {
-//                mTitleTextView.setText("Opening device failed");
-//                return;
-//            }
-//
-//            try {
-//                mPort.open(connection);
-//                mPort.setParameters(230400, 8, UsbSerialPort.STOPBITS_1, UsbSerialPort.PARITY_NONE);
-//            } catch (IOException e) {
-//                Toast.makeText(MainActivity.this, "Error setting up device: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-//                mTitleTextView.setText("Error opening device: " + e.getMessage());
-//                try {
-//                    mPort.close();
-//                } catch (IOException e2) {
-//                    // Ignore.
-//                }
-//                mPort = null;
-//                return;
-//            }
-//            mTitleTextView.setText("Serial device: " + mPort.getClass().getSimpleName());
-//
-//            // 血氧
-////            writeIoManage(GeneralSpO2Command(true));
-//            // 心电、呼吸
-////            writeIoManage(GeneralECGCommand(true));
-//            // 血压
-////            writeIoManage(GeneralNIBPCommand(true));
-//        }
-//        onDeviceStateChange();
-//
-//        Log.e("test", "onResume");
+        startIoManager();
+
+        if (mPort == null) {
+            mTitleTextView.setText("No serial device.");
+        } else {
+            UsbDeviceConnection connection = mUsbManager.openDevice(mPort.getDriver().getDevice());
+            if (connection == null) {
+                mTitleTextView.setText("Opening device failed");
+                return;
+            }
+
+            try {
+                mPort.open(connection);
+                mPort.setParameters(230400, 8, UsbSerialPort.STOPBITS_1, UsbSerialPort.PARITY_NONE);
+            } catch (IOException e) {
+                Toast.makeText(MainActivity.this, "Error setting up device: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                mTitleTextView.setText("Error opening device: " + e.getMessage());
+                try {
+                    mPort.close();
+                } catch (IOException e2) {
+                    // Ignore.
+                }
+                mPort = null;
+                return;
+            }
+            mTitleTextView.setText("Serial device: " + mPort.getClass().getSimpleName());
+
+            // 血氧
+//            writeIoManage(GeneralSpO2Command(true));
+            // 心电、呼吸
+//            writeIoManage(GeneralECGCommand(true));
+            // 血压
+//            writeIoManage(GeneralNIBPCommand(true));
+        }
+        onDeviceStateChange();
+
+        Log.e("test", "onResume");
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-//        mDrawerLayout.closeDrawer(Gravity.START);
-//        stopIoManager();
-//        if (mPort != null) {
-//            try {
-//                mPort.close();
-//            } catch (IOException e) {
-//                // Ignore.
-//            }
-//        }
-//        Log.e("test", "onPause");
+        mDrawerLayout.closeDrawer(Gravity.START);
+        stopIoManager();
+        if (mPort != null) {
+            try {
+                mPort.close();
+            } catch (IOException e) {
+                // Ignore.
+            }
+        }
+        Log.e("test", "onPause");
     }
 
 
@@ -513,7 +513,7 @@ public class MainActivity extends BaseActivity implements View.OnTouchListener {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        unbindService(mConnection);
+//        unbindService(mConnection);
 //        stopService(mServiceIntent);
         EventBus.getDefault().unregister(this);
         Log.e("test", "onDestroy");
